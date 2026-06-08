@@ -105,7 +105,15 @@ export type ProfileTab =
   | "settings";
 
 /** Which main-area view the left nav is showing. */
-export type View = "home" | "search" | "meetings" | "routines";
+export type View =
+  | "home"
+  | "search"
+  | "meetings"
+  | "routines"
+  | "conversations"
+  | "actions"
+  | "insights"
+  | "marketplace";
 
 /** A persona-drafted document shown in the Draft Preview modal. */
 export interface DraftPayload {

@@ -1,6 +1,6 @@
 "use client";
 
-import { CreditCard, KeyRound, Bell, ShieldCheck } from "lucide-react";
+import { CreditCard, KeyRound, Bell, ShieldCheck, UserPlus } from "lucide-react";
 import { Section, Toggle } from "./parts";
 import { useToast } from "../../ui/Toast";
 
@@ -32,6 +32,29 @@ export function SettingsTab() {
         <Toggle label="Pre-meeting briefs" desc="Email a brief before each meeting." defaultOn />
         <Toggle label="Post-meeting recaps" desc="Recap + commitments to your inbox." defaultOn />
         <Toggle label="Weekly digest" desc="What moved, what's open." />
+      </Section>
+
+      <Section title="Team" desc="Invite teammates to share personas and seats.">
+        <div className="space-y-2">
+          {[
+            { name: "Sai Deekshith Badam", role: "Owner", initials: "SD" },
+            { name: "Priya Nair", role: "Editor", initials: "PN" },
+          ].map((m) => (
+            <div key={m.name} className="flex items-center gap-3 rounded-xl border border-line bg-paper px-3.5 py-2.5">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-paper-2 text-[12px] font-medium text-ink-soft ring-1 ring-line">
+                {m.initials}
+              </span>
+              <span className="flex-1 text-[13.5px] font-medium">{m.name}</span>
+              <span className="rounded-full bg-paper-2 px-2.5 py-0.5 text-[11px] text-muted">{m.role}</span>
+            </div>
+          ))}
+          <button
+            onClick={() => toast("Invite sent (mock)")}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-line-strong px-3.5 py-2.5 text-[13px] font-medium text-muted transition hover:border-accent hover:text-accent"
+          >
+            <UserPlus size={15} /> Invite teammate
+          </button>
+        </div>
       </Section>
 
       <Section title="Developer">

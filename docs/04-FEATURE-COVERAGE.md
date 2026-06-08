@@ -4,10 +4,19 @@
 **Question:** Does the generated webapp contain all the features from personaon.com and the
 `snsettitech/PersonaOn` repo?
 
-**Short answer:** **No — and by design.** This is a **UI direction mockup** (the new
-command-dashboard + profile-popup concept the CEO asked for), with **mock data and no
-backend**. It *represents* the breadth of the product so the new shape reads correctly, but
-it is not a feature-complete port. Below is exactly what's in, partial, or out.
+> **Update (v2):** Coverage was expanded so that **every feature visible in the real
+> PersonaOn frontend and in the reference apps now has a home in the mockup** (placement/size
+> may differ). Newly added: **Conversations + Queued questions**, **Actions / Triggers /
+> Approval inbox**, **Insights / Analytics**, **Marketplace**, **Projects**, a **Meeting
+> Detail** view (Brief/Transcript/Recap/Actions), **Draft previews**, plus reference-app
+> touches (New chat, Share, Voice, "Context enabled", embed code, Team, YouTube/podcast/X
+> sources). The table below is the original first-pass coverage; the matching rows are now
+> built. Still mock data — no backend.
+
+**Short answer:** This is a **UI direction mockup** (the new command-dashboard + profile-popup
+concept the CEO asked for), with **mock data and no backend**. As of v2 it now *represents the
+full breadth* of the product — every major surface and button has a suitable place — but the
+data is mocked and the depth is illustrative.
 
 Legend: ✅ represented in the mockup (UI present, mocked) · ◐ partially / hinted · ❌ not built
 

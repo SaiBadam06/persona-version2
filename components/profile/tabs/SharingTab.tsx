@@ -59,6 +59,22 @@ export function SharingTab() {
         </div>
       </Section>
 
+      <Section title="Embed on your site" desc="Drop this snippet anywhere — a chat bubble appears in your voice.">
+        <div className="rounded-xl border border-line bg-ink/95 p-3.5">
+          <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[11.5px] leading-relaxed text-white/90">{`<script src="https://personaon.com/widget.js"
+  data-persona="sai-badam"
+  data-mode="bubble"></script>`}</pre>
+        </div>
+        <button
+          onClick={() => {
+            navigator.clipboard?.writeText('<script src="https://personaon.com/widget.js" data-persona="sai-badam" data-mode="bubble"></script>').then(() => toast("Embed code copied")).catch(() => toast("Copied", "info"));
+          }}
+          className="mt-2 flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2"
+        >
+          <Copy size={13} /> Copy embed code
+        </button>
+      </Section>
+
       <Section title="Controls">
         <Toggle label="Persona is public" desc="Anyone with the link can chat." defaultOn />
         <Toggle label="Show in marketplace" desc="Discoverable in the directory." />

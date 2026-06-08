@@ -7,6 +7,9 @@ import {
   CalendarClock,
   Upload,
   Plus,
+  Youtube,
+  Podcast,
+  Twitter,
 } from "lucide-react";
 import { KNOWLEDGE } from "@/lib/mock-data";
 import { Section } from "./parts";
@@ -76,6 +79,28 @@ export function KnowledgeTab() {
           >
             <Plus size={15} /> Add manually
           </button>
+        </div>
+
+        <p className="mt-4 mb-2 text-[12px] font-medium uppercase tracking-wider text-muted">
+          Pull from
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {[
+            { icon: Youtube, label: "YouTube" },
+            { icon: Podcast, label: "Podcast" },
+            { icon: Twitter, label: "X / Twitter" },
+          ].map((s) => {
+            const Icon = s.icon;
+            return (
+              <button
+                key={s.label}
+                onClick={() => toast(`Importing from ${s.label}… (mock)`, "info")}
+                className="flex items-center gap-2 rounded-lg border border-line bg-paper px-3.5 py-2 text-[13px] font-medium text-ink-soft transition hover:border-accent hover:text-accent"
+              >
+                <Icon size={15} /> {s.label}
+              </button>
+            );
+          })}
         </div>
       </Section>
     </div>
