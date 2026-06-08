@@ -13,6 +13,7 @@ import {
   Briefcase,
   Linkedin,
   MessageSquare,
+  NotebookText,
   Upload,
   Link2,
   Check,
@@ -34,8 +35,13 @@ const CONNECTOR_ICON: Record<string, typeof Calendar> = {
   crm: Briefcase,
   social: Linkedin,
   chat: MessageSquare,
-  docs: Briefcase,
+  docs: NotebookText,
 };
+
+// One connector per category — distinct icons, no repeats in the row.
+const ROW_CONNECTORS = CONNECTORS.filter(
+  (c, i, arr) => arr.findIndex((x) => x.hint === c.hint) === i
+);
 
 function todayLabel() {
   return new Date().toLocaleDateString("en-US", {
@@ -270,7 +276,7 @@ export function CommandArea() {
               className="ml-auto flex items-center gap-1"
               title="Manage connectors"
             >
-              {CONNECTORS.slice(0, 7).map((c) => {
+              {ROW_CONNECTORS.map((c) => {
                 const Icon = CONNECTOR_ICON[c.hint] ?? Briefcase;
                 return (
                   <span
