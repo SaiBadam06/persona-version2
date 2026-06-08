@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { KNOWLEDGE } from "@/lib/mock-data";
 import { Section } from "./parts";
+import { useToast } from "../../ui/Toast";
 
 const ICON = {
   linkedin: Linkedin,
@@ -20,6 +21,7 @@ const ICON = {
 } as const;
 
 export function KnowledgeTab() {
+  const toast = useToast();
   return (
     <div className="animate-fade-in">
       <Section
@@ -56,13 +58,22 @@ export function KnowledgeTab() {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          <button className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-[13px] font-medium transition hover:border-accent hover:text-accent">
+          <button
+            onClick={() => toast("Uploading… your persona will index it (mock)", "info")}
+            className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-[13px] font-medium transition hover:border-accent hover:text-accent"
+          >
             <Upload size={15} /> Upload file
           </button>
-          <button className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-[13px] font-medium transition hover:border-accent hover:text-accent">
+          <button
+            onClick={() => toast("Crawling the URL… (mock)", "info")}
+            className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-[13px] font-medium transition hover:border-accent hover:text-accent"
+          >
             <Globe size={15} /> Add URL
           </button>
-          <button className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-[13px] font-medium transition hover:border-accent hover:text-accent">
+          <button
+            onClick={() => toast("Add a fact manually (mock)", "info")}
+            className="flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-[13px] font-medium transition hover:border-accent hover:text-accent"
+          >
             <Plus size={15} /> Add manually
           </button>
         </div>

@@ -22,6 +22,7 @@ standalone — no prior context needed. Every claim comes from reading the actua
 | [02-PRODUCT-LOOPHOLES.md](02-PRODUCT-LOOPHOLES.md) | **Every issue found** — security (SSRF, secrets, sanitizer, rate limiter), product/UX gaps (legal pages, onboarding, navigation), and tech debt. Each item: what it is, why it matters, how to fix, in priority order. |
 | [03-NEW-APP-DESIGN.md](03-NEW-APP-DESIGN.md) | **The new interface** — the reasoning, what we took from ChatGPT/Granola/Littlebird/Replit/Lovable and why, the 6-ICP personalization, what's built, and how engineering ships it for real. |
 | [04-FEATURE-COVERAGE.md](04-FEATURE-COVERAGE.md) | **Honest scope** — exactly which product features the mockup does and doesn't include. |
+| [05-ICP-VIEWS.md](05-ICP-VIEWS.md) | **Per-ICP differences** — what changes between the 6 audiences (and what stays the same), lever by lever. |
 | [CEO-BRIEF.md](CEO-BRIEF.md) | The CEO's 5 asks answered: interface direction · onboarding analysis · backend changes · ICP research · the mockup. |
 | [DEMO-SCRIPT.md](DEMO-SCRIPT.md) | A ~4-minute click-through script for presenting the mockup live. |
 

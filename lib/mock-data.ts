@@ -1,6 +1,7 @@
 import type {
   Commitment,
   Connector,
+  DraftPayload,
   IcpId,
   KnowledgeSource,
   Meeting,
@@ -313,3 +314,96 @@ export const SUGGESTED_MORE = [
   "Turn my last meeting into a follow-up email",
   "What's my best next action right now?",
 ];
+
+// --- Meeting detail (brief / transcript / recap / actions) ---------------------
+
+export interface TranscriptLine {
+  speaker: string;
+  me: boolean;
+  text: string;
+  t: string;
+}
+
+export interface MeetingDetail {
+  briefPoints: string[];
+  transcript: TranscriptLine[];
+  recapTldr: string;
+  decisions: string[];
+  actions: { text: string; owner: string }[];
+}
+
+function counterpartName(withWhom: string): string {
+  return withWhom.split("·")[0].trim().split(" ")[0];
+}
+
+/** Build believable detail content for any meeting card. */
+export function buildMeetingDetail(m: Meeting): MeetingDetail {
+  const them = counterpartName(m.withWhom);
+  return {
+    briefPoints: [
+      m.brief,
+      `You've spoken with ${them} before — pick up the open thread, don't restart.`,
+      `Lead with the one metric they cared about last time; have the number ready.`,
+      `Soft close: propose a concrete next step before the call ends.`,
+    ],
+    transcript: [
+      { speaker: them, me: false, t: "00:02", text: `Thanks for making the time — excited to dig in on ${m.title.toLowerCase()}.` },
+      { speaker: "You", me: true, t: "00:09", text: "Likewise. Before we start — anything changed on your side since we last spoke?" },
+      { speaker: them, me: false, t: "00:21", text: "A bit. The main thing we want to understand is the traction and how repeatable it is." },
+      { speaker: "You", me: true, t: "00:34", text: "Totally fair. Let me walk you through the numbers and where they come from." },
+      { speaker: them, me: false, t: "01:12", text: "That's helpful. What would the next step look like from here?" },
+      { speaker: "You", me: true, t: "01:20", text: "I'll send over the detail this week, and we can reconnect once you've had a look." },
+    ],
+    recapTldr: m.state === "recap"
+      ? m.brief
+      : `Strong conversation with ${them}. Clear interest; the open question is repeatability. Agreed to exchange detail and reconnect.`,
+    decisions: [
+      `Move forward to a follow-up conversation with ${them}.`,
+      `Share the supporting detail before the next call.`,
+    ],
+    actions: [
+      { text: `Send ${them} the detail discussed`, owner: "You" },
+      { text: `Reconnect once reviewed`, owner: "You" },
+      { text: `Loop in their team`, owner: them },
+    ],
+  };
+}
+
+// --- Draft templates (the persona-written documents) ---------------------------
+
+export function followupDraft(m: Meeting): DraftPayload {
+  const them = counterpartName(m.withWhom);
+  return {
+    title: `Follow-up — ${m.title}`,
+    kind: "email",
+    to: m.withWhom,
+    body: `Hi ${them},
+
+Thanks for the conversation today — really enjoyed it. As promised, I'll get the detail we discussed over to you this week so you have everything in one place.
+
+To recap what we landed on:
+• I'll send through the supporting numbers and context.
+• You'll take a look and we'll reconnect from there.
+
+Anything else useful in the meantime, just say the word.
+
+Best,
+Sai`,
+  };
+}
+
+export function recapDraft(m: Meeting): DraftPayload {
+  const d = buildMeetingDetail(m);
+  return {
+    title: `Recap — ${m.title}`,
+    kind: "recap",
+    body: `TL;DR
+${d.recapTldr}
+
+Decisions
+${d.decisions.map((x) => `• ${x}`).join("\n")}
+
+Action items
+${d.actions.map((x) => `• ${x.text} — ${x.owner}`).join("\n")}`,
+  };
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Plus,
   Mic,
@@ -13,13 +13,19 @@ import {
   Briefcase,
   Linkedin,
   MessageSquare,
+  Upload,
+  Link2,
+  Check,
 } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { ICPS } from "@/lib/icps";
-import { USER, CONNECTORS } from "@/lib/mock-data";
+import { USER, CONNECTORS, SUGGESTED_MORE } from "@/lib/mock-data";
 import type { ChatMessage } from "@/lib/types";
 import { Avatar } from "./ui/Avatar";
+import { useToast } from "./ui/Toast";
 import { cn } from "@/lib/utils";
+
+const MODES = ["Auto", "Deep dive", "Casual", "Technical", "Professional", "Friendly"];
 
 const CONNECTOR_ICON: Record<string, typeof Calendar> = {
   calendar: Calendar,
@@ -40,11 +46,25 @@ function todayLabel() {
 }
 
 export function CommandArea() {
-  const { icp } = useApp();
+  const { icp, openProfile, seededPrompt, clearSeed } = useApp();
   const cfg = ICPS[icp];
+  const toast = useToast();
   const [value, setValue] = useState("");
   const [thread, setThread] = useState<ChatMessage[]>([]);
   const [thinking, setThinking] = useState(false);
+  const [mode, setMode] = useState("Auto");
+  const [modeOpen, setModeOpen] = useState(false);
+  const [attachOpen, setAttachOpen] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+
+  // Prefill the box when something elsewhere seeds a prompt ("fill via chat").
+  useEffect(() => {
+    if (seededPrompt) {
+      setValue(seededPrompt);
+      clearSeed();
+    }
+  }, [seededPrompt, clearSeed]);
 
   function send(text: string) {
     const q = text.trim();
@@ -154,16 +174,79 @@ export function CommandArea() {
             className="block w-full resize-none bg-transparent px-3 py-2 text-[15px] outline-none placeholder:text-muted"
           />
           <div className="flex items-center justify-between px-1">
-            <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-paper-2">
-              <Plus size={19} />
-            </button>
-            <div className="flex items-center gap-1">
-              <button className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] text-ink-soft transition hover:bg-paper-2">
-                <Sparkles size={15} className="text-accent" />
-                Mode
-                <ChevronDown size={14} className="text-muted" />
+            {/* Attach menu */}
+            <div className="relative">
+              <button
+                onClick={() => { setAttachOpen((o) => !o); setModeOpen(false); }}
+                className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-paper-2"
+              >
+                <Plus size={19} />
               </button>
-              <button className="flex h-9 w-9 items-center justify-center rounded-full text-muted transition hover:bg-paper-2">
+              {attachOpen && (
+                <>
+                  <div className="fixed inset-0 z-20" onClick={() => setAttachOpen(false)} />
+                  <div className="absolute bottom-11 left-0 z-30 w-52 animate-scale-in rounded-xl border border-line bg-surface p-1.5 shadow-xl shadow-black/5">
+                    {[
+                      { icon: Upload, label: "Upload a file" },
+                      { icon: Link2, label: "Add a link" },
+                      { icon: Video, label: "Record a meeting" },
+                    ].map((o) => {
+                      const Icon = o.icon;
+                      return (
+                        <button
+                          key={o.label}
+                          onClick={() => { setAttachOpen(false); toast(`${o.label} — mock`, "info"); }}
+                          className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13.5px] transition hover:bg-paper-2"
+                        >
+                          <Icon size={15} className="text-muted" /> {o.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1">
+              {/* Mode menu */}
+              <div className="relative">
+                <button
+                  onClick={() => { setModeOpen((o) => !o); setAttachOpen(false); }}
+                  className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] text-ink-soft transition hover:bg-paper-2"
+                >
+                  <Sparkles size={15} className="text-accent" />
+                  {mode === "Auto" ? "Mode" : mode}
+                  <ChevronDown size={14} className="text-muted" />
+                </button>
+                {modeOpen && (
+                  <>
+                    <div className="fixed inset-0 z-20" onClick={() => setModeOpen(false)} />
+                    <div className="absolute bottom-10 right-0 z-30 w-44 animate-scale-in rounded-xl border border-line bg-surface p-1.5 shadow-xl shadow-black/5">
+                      {MODES.map((mo) => (
+                        <button
+                          key={mo}
+                          onClick={() => { setMode(mo); setModeOpen(false); }}
+                          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[13.5px] transition hover:bg-paper-2"
+                        >
+                          <span className="flex-1">{mo}</span>
+                          {mode === mo && <Check size={14} className="text-accent" />}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  setListening((l) => !l);
+                  toast(listening ? "Stopped listening" : "Listening… (mock)", "info");
+                }}
+                className={cn(
+                  "flex h-9 w-9 items-center justify-center rounded-full transition",
+                  listening ? "bg-accent-soft text-accent" : "text-muted hover:bg-paper-2"
+                )}
+              >
                 <Mic size={18} />
               </button>
               <button
@@ -182,7 +265,11 @@ export function CommandArea() {
             <span className="text-[12px] text-muted">
               Connect your apps for sharper answers
             </span>
-            <div className="ml-auto flex items-center gap-1">
+            <button
+              onClick={() => openProfile("connectors")}
+              className="ml-auto flex items-center gap-1"
+              title="Manage connectors"
+            >
               {CONNECTORS.slice(0, 7).map((c) => {
                 const Icon = CONNECTOR_ICON[c.hint] ?? Briefcase;
                 return (
@@ -190,7 +277,7 @@ export function CommandArea() {
                     key={c.id}
                     title={c.name}
                     className={cn(
-                      "flex h-7 w-7 items-center justify-center rounded-lg border text-[12px]",
+                      "flex h-7 w-7 items-center justify-center rounded-lg border text-[12px] transition hover:scale-105",
                       c.connected
                         ? "border-line bg-paper-2 text-ink-soft"
                         : "border-dashed border-line-strong text-muted opacity-60"
@@ -200,7 +287,7 @@ export function CommandArea() {
                   </span>
                 );
               })}
-            </div>
+            </button>
           </div>
         </div>
 
@@ -216,9 +303,24 @@ export function CommandArea() {
                 {s}
               </button>
             ))}
-            <button className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[13px] text-muted transition hover:bg-paper-2">
-              <Sparkles size={14} /> More suggestions
-            </button>
+            {showMore &&
+              SUGGESTED_MORE.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => send(s)}
+                  className="rounded-full border border-line bg-surface px-3.5 py-2 text-[13px] text-ink-soft transition hover:border-accent hover:text-accent"
+                >
+                  {s}
+                </button>
+              ))}
+            {!showMore && (
+              <button
+                onClick={() => setShowMore(true)}
+                className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-2 text-[13px] text-muted transition hover:bg-paper-2"
+              >
+                <Sparkles size={14} /> More suggestions
+              </button>
+            )}
           </div>
         )}
       </div>

@@ -4,10 +4,12 @@ import { useState } from "react";
 import { RefreshCw, Plus } from "lucide-react";
 import { useApp } from "@/lib/store";
 import { routinesFor } from "@/lib/mock-data";
+import { useToast } from "../ui/Toast";
 import { cn } from "@/lib/utils";
 
 export function RoutinesView() {
   const { icp } = useApp();
+  const toast = useToast();
   const initial = routinesFor(icp);
   const [enabled, setEnabled] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(initial.map((r) => [r.id, r.enabled]))
@@ -57,7 +59,10 @@ export function RoutinesView() {
           );
         })}
 
-        <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-line-strong px-4 py-3.5 text-[13.5px] font-medium text-muted transition hover:border-accent hover:text-accent">
+        <button
+          onClick={() => toast("Describe a new routine in plain English (mock)", "info")}
+          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-dashed border-line-strong px-4 py-3.5 text-[13.5px] font-medium text-muted transition hover:border-accent hover:text-accent"
+        >
           <Plus size={16} /> New routine
         </button>
       </div>

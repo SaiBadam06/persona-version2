@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const FILTERS = ["All", "Upcoming", "Recaps"] as const;
 
 export function MeetingsView() {
-  const { icp } = useApp();
+  const { icp, openMeeting } = useApp();
   const all = meetingsFor(icp);
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("All");
 
@@ -54,9 +54,10 @@ export function MeetingsView() {
         {list.map((m) => {
           const upcoming = m.state === "upcoming";
           return (
-            <div
+            <button
               key={m.id}
-              className="rounded-2xl border border-line bg-surface p-4 transition hover:border-line-strong"
+              onClick={() => openMeeting(m.id)}
+              className="block w-full rounded-2xl border border-line bg-surface p-4 text-left transition hover:border-line-strong"
             >
               <div className="flex items-start gap-3">
                 <Avatar initials={m.initials} size={40} />
@@ -77,7 +78,7 @@ export function MeetingsView() {
                         {t}
                       </Tag>
                     ))}
-                    <button className="ml-auto flex items-center gap-1 text-[12.5px] font-medium text-accent">
+                    <span className="ml-auto flex items-center gap-1 text-[12.5px] font-medium text-accent">
                       {upcoming ? (
                         <>
                           <Play size={13} /> Open brief
@@ -87,11 +88,11 @@ export function MeetingsView() {
                           <ArrowUpRight size={13} /> View recap
                         </>
                       )}
-                    </button>
+                    </span>
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           );
         })}
       </div>

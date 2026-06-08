@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"c:\\\\Projects\\\\PersonaOn v2\"; $p = Start-Process \"cmd.exe\" -ArgumentList \"/c\",\"npm run dev > dev.log 2>&1\" -PassThru -WindowStyle Hidden; Start-Sleep -Seconds 14; foreach \\($u in @\\(\"/\",\"/onboarding\"\\)\\) { try { $r = Invoke-WebRequest \"http://localhost:3000$u\" -UseBasicParsing -TimeoutSec 20; \"$u -> HTTP $\\($r.StatusCode\\)\" } catch { \"$u -> ERR: $_\" } }; Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue)"
+    ]
+  }
+}

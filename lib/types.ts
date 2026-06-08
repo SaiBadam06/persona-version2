@@ -106,3 +106,11 @@ export type ProfileTab =
 
 /** Which main-area view the left nav is showing. */
 export type View = "home" | "search" | "meetings" | "routines";
+
+/** A persona-drafted document shown in the Draft Preview modal. */
+export interface DraftPayload {
+  title: string;
+  kind: "email" | "recap" | "update" | "note";
+  to?: string;
+  body: string;
+}

@@ -2,8 +2,18 @@
 
 import { Link2, Code2, QrCode, Store, Copy } from "lucide-react";
 import { Section, Toggle } from "./parts";
+import { useToast } from "../../ui/Toast";
 
 export function SharingTab() {
+  const toast = useToast();
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText("https://personaon.com/p/sai-badam");
+      toast("Public link copied");
+    } catch {
+      toast("Copied", "info");
+    }
+  }
   return (
     <div className="animate-fade-in">
       <Section title="Public page" desc="A shareable page where anyone can chat with your persona.">
@@ -12,7 +22,10 @@ export function SharingTab() {
           <span className="flex-1 truncate font-mono text-[13px] text-ink-soft">
             personaon.com/p/sai-badam
           </span>
-          <button className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2">
+          <button
+            onClick={copyLink}
+            className="flex items-center gap-1.5 rounded-lg border border-line bg-surface px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2"
+          >
             <Copy size={13} /> Copy
           </button>
         </div>
@@ -30,6 +43,7 @@ export function SharingTab() {
             return (
               <button
                 key={o.label}
+                onClick={() => toast(`${o.label} — mock`, "info")}
                 className="flex items-center gap-3 rounded-xl border border-line bg-paper px-3.5 py-3 text-left transition hover:border-accent"
               >
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface text-accent ring-1 ring-line">

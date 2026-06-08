@@ -2,8 +2,14 @@
 
 import { TrendingUp, AlertCircle, CheckCircle2 } from "lucide-react";
 import { Section } from "./parts";
+import { useApp } from "@/lib/store";
 
 export function AnalysisTab() {
+  const { seedPrompt, closeProfile } = useApp();
+  function fill(topic: string) {
+    seedPrompt(`Let's fill a gap in my persona — ask me about: ${topic}`);
+    closeProfile();
+  }
   return (
     <div className="animate-fade-in">
       <Section title="Persona score" desc="How complete and grounded your persona is.">
@@ -56,7 +62,9 @@ export function AnalysisTab() {
               >
                 <AlertCircle size={16} className="text-amber" />
                 <span className="flex-1">{t}</span>
-                <button className="text-[12px] font-medium text-accent">Fill via chat</button>
+                <button onClick={() => fill(t)} className="text-[12px] font-medium text-accent">
+                  Fill via chat
+                </button>
               </div>
             )
           )}

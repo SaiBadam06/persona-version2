@@ -2,8 +2,10 @@
 
 import { CreditCard, KeyRound, Bell, ShieldCheck } from "lucide-react";
 import { Section, Toggle } from "./parts";
+import { useToast } from "../../ui/Toast";
 
 export function SettingsTab() {
+  const toast = useToast();
   return (
     <div className="animate-fade-in">
       <Section title="Plan & billing">
@@ -17,7 +19,10 @@ export function SettingsTab() {
               5,000 conversations · 30 voice min · renews Jul 8
             </p>
           </div>
-          <button className="rounded-lg border border-line bg-surface px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2">
+          <button
+            onClick={() => toast("Opening billing portal… (mock)", "info")}
+            className="rounded-lg border border-line bg-surface px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2"
+          >
             Manage
           </button>
         </div>
@@ -33,7 +38,9 @@ export function SettingsTab() {
         <div className="flex items-center gap-3 rounded-xl border border-line bg-paper px-3.5 py-3">
           <KeyRound size={16} className="text-muted" />
           <span className="flex-1 font-mono text-[13px] text-ink-soft">pk_live_••••••••••3a9f</span>
-          <button className="text-[12.5px] font-medium text-accent">Roll key</button>
+          <button onClick={() => toast("New API key generated")} className="text-[12.5px] font-medium text-accent">
+            Roll key
+          </button>
         </div>
       </Section>
 
@@ -47,6 +54,7 @@ export function SettingsTab() {
             return (
               <button
                 key={o.label}
+                onClick={() => toast(`${o.label} — mock`, "info")}
                 className="flex w-full items-center gap-3 rounded-xl border border-line bg-paper px-3.5 py-3 text-left text-[13.5px] transition hover:border-line-strong"
               >
                 <Icon size={16} className="text-muted" />

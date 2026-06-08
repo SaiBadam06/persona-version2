@@ -1,11 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { Mic, Volume2 } from "lucide-react";
 import { Section, Field, Toggle, Pill } from "./parts";
+import { useToast } from "../../ui/Toast";
 
 const TONES = ["Professional", "Warm", "Direct", "Technical", "Concise"];
 
 export function PersonaTab() {
+  const toast = useToast();
+  const [tone, setTone] = useState("Professional");
   return (
     <div className="animate-fade-in">
       <Section title="Identity" desc="How your persona introduces itself.">
@@ -20,11 +24,12 @@ export function PersonaTab() {
 
       <Section title="Voice & tone" desc="Pick how it sounds. Used in chat, briefs, and recaps.">
         <div className="mb-3 flex flex-wrap gap-2">
-          {TONES.map((t, i) => (
+          {TONES.map((t) => (
             <button
               key={t}
+              onClick={() => { setTone(t); toast(`Tone set to ${t}`); }}
               className={`rounded-full border px-3 py-1.5 text-[12.5px] transition ${
-                i === 0
+                tone === t
                   ? "border-accent bg-accent-soft text-accent"
                   : "border-line bg-paper text-ink-soft hover:border-line-strong"
               }`}
@@ -41,7 +46,10 @@ export function PersonaTab() {
             <p className="text-[13.5px] font-medium">Voice clone · active</p>
             <p className="text-[12px] text-muted">ElevenLabs · 0:42 sample · sounds like you</p>
           </div>
-          <button className="flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2">
+          <button
+            onClick={() => toast("Recording… speak for 30 seconds (mock)", "info")}
+            className="flex items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-[12.5px] font-medium transition hover:bg-paper-2"
+          >
             <Mic size={13} /> Re-record
           </button>
         </div>

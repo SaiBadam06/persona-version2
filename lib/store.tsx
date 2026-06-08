@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { ICPS } from "./icps";
-import type { IcpId, ProfileTab, View } from "./types";
+import type { IcpId, ProfileTab, View, DraftPayload } from "./types";
 
 interface AppState {
   icp: IcpId;
@@ -20,6 +20,18 @@ interface AppState {
   openProfile: (tab?: ProfileTab) => void;
   closeProfile: () => void;
   setProfileTab: (tab: ProfileTab) => void;
+  // Meeting detail modal
+  detailMeetingId: string | null;
+  openMeeting: (id: string) => void;
+  closeMeeting: () => void;
+  // Draft preview modal
+  draft: DraftPayload | null;
+  openDraft: (d: DraftPayload) => void;
+  closeDraft: () => void;
+  // Command box → seeded from "fill via chat" etc.
+  seededPrompt: string | null;
+  seedPrompt: (p: string) => void;
+  clearSeed: () => void;
 }
 
 const Ctx = createContext<AppState | null>(null);
@@ -27,7 +39,6 @@ const Ctx = createContext<AppState | null>(null);
 const ICP_KEY = "personaon:icp";
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  // Initialise from the ICP chosen during onboarding (persisted in localStorage).
   const [icp, setIcp] = useState<IcpId>(() => {
     if (typeof window !== "undefined") {
       const saved = window.localStorage.getItem(ICP_KEY);
@@ -38,8 +49,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [view, setView] = useState<View>("home");
   const [profileOpen, setProfileOpen] = useState(false);
   const [profileTab, setProfileTab] = useState<ProfileTab>("persona");
+  const [detailMeetingId, setDetailMeetingId] = useState<string | null>(null);
+  const [draft, setDraft] = useState<DraftPayload | null>(null);
+  const [seededPrompt, setSeededPrompt] = useState<string | null>(null);
 
-  // Drive the live accent CSS variables off the selected ICP, and persist it.
   useEffect(() => {
     const cfg = ICPS[icp];
     const root = document.documentElement;
@@ -64,8 +77,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       closeProfile: () => setProfileOpen(false),
       setProfileTab,
+      detailMeetingId,
+      openMeeting: (id) => setDetailMeetingId(id),
+      closeMeeting: () => setDetailMeetingId(null),
+      draft,
+      openDraft: (d) => setDraft(d),
+      closeDraft: () => setDraft(null),
+      seededPrompt,
+      seedPrompt: (p) => {
+        setSeededPrompt(p);
+        setView("home");
+      },
+      clearSeed: () => setSeededPrompt(null),
     }),
-    [icp, view, profileOpen, profileTab]
+    [icp, view, profileOpen, profileTab, detailMeetingId, draft, seededPrompt]
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

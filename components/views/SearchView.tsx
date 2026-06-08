@@ -6,7 +6,7 @@ import { useApp } from "@/lib/store";
 import { meetingsFor, KNOWLEDGE } from "@/lib/mock-data";
 
 export function SearchView() {
-  const { icp } = useApp();
+  const { icp, openMeeting, openProfile } = useApp();
   const [q, setQ] = useState("");
 
   const meetings = meetingsFor(icp);
@@ -23,16 +23,24 @@ export function SearchView() {
         icon: CalendarClock,
         title: x.title,
         sub: x.withWhom + " · " + x.time,
+        onClick: () => openMeeting(x.id),
       }));
     const k = KNOWLEDGE.filter((x) =>
       !term ? true : (x.name + x.detail).toLowerCase().includes(term)
-    ).map((x) => ({ icon: BookOpen, title: x.name, sub: x.detail }));
+    ).map((x) => ({
+      icon: BookOpen,
+      title: x.name,
+      sub: x.detail,
+      onClick: () => openProfile("knowledge"),
+    }));
     const people = [
       { icon: UserRound, title: "Priya Nair", sub: "Met 3× · last week" },
       { icon: UserRound, title: "Marcus Lee", sub: "Met 1× · owes you the data room" },
-    ].filter((x) => (!term ? true : x.title.toLowerCase().includes(term)));
+    ]
+      .filter((x) => (!term ? true : x.title.toLowerCase().includes(term)))
+      .map((x) => ({ ...x, onClick: () => openProfile("knowledge") }));
     return { m, k, people };
-  }, [q, meetings]);
+  }, [q, meetings, openMeeting, openProfile]);
 
   return (
     <div className="mx-auto w-full max-w-[760px] px-6 py-9 animate-fade-in">
@@ -62,7 +70,7 @@ function Group({
   items,
 }: {
   label: string;
-  items: { icon: typeof Search; title: string; sub: string }[];
+  items: { icon: typeof Search; title: string; sub: string; onClick: () => void }[];
 }) {
   if (!items.length) return null;
   return (
@@ -76,6 +84,7 @@ function Group({
           return (
             <button
               key={it.title}
+              onClick={it.onClick}
               className="flex w-full items-center gap-3 rounded-xl border border-line bg-surface px-3.5 py-3 text-left transition hover:border-accent"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-paper-2 text-ink-soft">

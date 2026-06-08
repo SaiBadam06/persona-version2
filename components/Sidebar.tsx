@@ -13,6 +13,7 @@ import { useApp } from "@/lib/store";
 import { USER } from "@/lib/mock-data";
 import { ICPS } from "@/lib/icps";
 import { Avatar } from "./ui/Avatar";
+import { useToast } from "./ui/Toast";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -31,6 +32,7 @@ const RECENT = [
 
 export function Sidebar() {
   const { icp, view, setView, openProfile } = useApp();
+  const toast = useToast();
   const cfg = ICPS[icp];
 
   return (
@@ -107,17 +109,23 @@ export function Sidebar() {
       <div className="flex-1" />
 
       {/* Promo */}
-      <div className="mx-3 mb-2 flex items-center gap-2 rounded-xl bg-paper-2 px-3 py-2.5 text-[13px] text-ink-soft">
+      <button
+        onClick={() => toast("Invite link copied — share it to earn credit")}
+        className="mx-3 mb-2 flex items-center gap-2 rounded-xl bg-paper-2 px-3 py-2.5 text-left text-[13px] text-ink-soft transition hover:bg-line"
+      >
         <Gift size={15} className="text-accent" />
         <span>Invite a peer — get 1 month free</span>
-      </div>
+      </button>
 
-      {/* Persona status */}
-      <div className="mx-3 mb-2 flex items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2 text-[12px]">
+      {/* Persona status → opens Analysis */}
+      <button
+        onClick={() => openProfile("analysis")}
+        className="mx-3 mb-2 flex items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2 text-[12px] transition hover:border-line-strong"
+      >
         <span className="h-2 w-2 rounded-full bg-[#2f8a5b] animate-pulse-dot" />
         <span className="text-ink-soft">Persona live ·</span>
         <span className="font-medium text-accent">{cfg.label}</span>
-      </div>
+      </button>
 
       {/* User chip → opens profile modal */}
       <button
