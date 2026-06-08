@@ -43,7 +43,7 @@ export function SharingTab() {
             return (
               <button
                 key={o.label}
-                onClick={() => toast(`${o.label} — mock`, "info")}
+                onClick={() => toast(`${o.label} - mock`, "info")}
                 className="flex items-center gap-3 rounded-xl border border-line bg-paper px-3.5 py-3 text-left transition hover:border-accent"
               >
                 <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface text-accent ring-1 ring-line">
@@ -59,7 +59,7 @@ export function SharingTab() {
         </div>
       </Section>
 
-      <Section title="Embed on your site" desc="Drop this snippet anywhere — a chat bubble appears in your voice.">
+      <Section title="Embed on your site" desc="Drop this snippet anywhere - a chat bubble appears in your voice.">
         <div className="rounded-xl border border-line bg-ink/95 p-3.5">
           <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[11.5px] leading-relaxed text-white/90">{`<script src="https://personaon.com/widget.js"
   data-persona="sai-badam"

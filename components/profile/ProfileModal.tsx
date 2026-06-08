@@ -6,6 +6,7 @@ import {
   UserRound,
   BookOpen,
   Plug,
+  Zap,
   BarChart3,
   Share2,
   Settings2,
@@ -21,11 +22,13 @@ import { ConnectorsTab } from "./tabs/ConnectorsTab";
 import { AnalysisTab } from "./tabs/AnalysisTab";
 import { SharingTab } from "./tabs/SharingTab";
 import { SettingsTab } from "./tabs/SettingsTab";
+import { ActionsView } from "../views/ActionsView";
 
 const TABS: { id: ProfileTab; label: string; icon: typeof UserRound }[] = [
   { id: "persona", label: "Persona", icon: UserRound },
   { id: "knowledge", label: "Knowledge", icon: BookOpen },
   { id: "connectors", label: "Connectors", icon: Plug },
+  { id: "actions", label: "Actions", icon: Zap },
   { id: "analysis", label: "Analysis", icon: BarChart3 },
   { id: "sharing", label: "Sharing", icon: Share2 },
   { id: "settings", label: "Settings", icon: Settings2 },
@@ -82,7 +85,7 @@ export function ProfileModal() {
             })}
           </div>
           <div className="mt-auto rounded-xl bg-accent-soft px-3 py-2.5 text-[12px] text-accent">
-            Everything here shapes how your persona answers, briefs, and acts.
+            Everything here shapes how your persona answers, notes, and acts.
           </div>
         </div>
 
@@ -103,6 +106,7 @@ export function ProfileModal() {
             {profileTab === "persona" && <PersonaTab />}
             {profileTab === "knowledge" && <KnowledgeTab />}
             {profileTab === "connectors" && <ConnectorsTab />}
+            {profileTab === "actions" && <ActionsView />}
             {profileTab === "analysis" && <AnalysisTab />}
             {profileTab === "sharing" && <SharingTab />}
             {profileTab === "settings" && <SettingsTab />}

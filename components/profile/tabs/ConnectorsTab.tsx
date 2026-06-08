@@ -33,7 +33,7 @@ export function ConnectorsTab() {
     <div className="animate-fade-in">
       <Section
         title="Connected apps"
-        desc="Calendar powers briefs. CRM keeps your accounts honest. The more it sees, the sharper it gets."
+        desc="Calendar powers notes. CRM keeps your accounts honest. The more it sees, the sharper it gets."
       >
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {CONNECTORS.map((c) => {

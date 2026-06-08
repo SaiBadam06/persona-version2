@@ -20,7 +20,8 @@
   --color-amber: #b4631b;
   --color-positive: #2f8a5b;
 
-  --font-serif: var(--font-playfair), Georgia, serif;
+  /* "serif" token kept for the .font-serif heading class, now a modern technical sans */
+  --font-serif: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   --radius-card: 16px;

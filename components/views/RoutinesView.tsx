@@ -22,7 +22,7 @@ export function RoutinesView() {
         <h1 className="font-serif text-[26px] tracking-tight">Routines</h1>
       </div>
       <p className="text-[14px] text-muted">
-        Standing instructions your persona runs automatically — on a schedule or when something
+        Standing instructions your persona runs automatically - on a schedule or when something
         happens.
       </p>
 

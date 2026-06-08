@@ -30,7 +30,7 @@ export function MeetingsView() {
         <h1 className="font-serif text-[26px] tracking-tight">Meetings</h1>
       </div>
       <p className="text-[14px] text-muted">
-        Your persona preps every one of these — briefs before, recaps after.
+        Your persona preps every one of these - notes before, recaps after.
       </p>
 
       <div className="mt-5 flex gap-1.5">
@@ -74,14 +74,14 @@ export function MeetingsView() {
                   </p>
                   <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
                     {m.tags.map((t) => (
-                      <Tag key={t} tone={t.includes("Brief") ? "accent" : "neutral"}>
+                      <Tag key={t} tone={t.includes("Notes") ? "accent" : "neutral"}>
                         {t}
                       </Tag>
                     ))}
                     <span className="ml-auto flex items-center gap-1 text-[12.5px] font-medium text-accent">
                       {upcoming ? (
                         <>
-                          <Play size={13} /> Open brief
+                          <Play size={13} /> Open notes
                         </>
                       ) : (
                         <>

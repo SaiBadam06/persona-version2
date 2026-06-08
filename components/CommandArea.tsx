@@ -38,7 +38,7 @@ const CONNECTOR_ICON: Record<string, typeof Calendar> = {
   docs: NotebookText,
 };
 
-// One connector per category — distinct icons, no repeats in the row.
+// One connector per category - distinct icons, no repeats in the row.
 const ROW_CONNECTORS = CONNECTORS.filter(
   (c, i, arr) => arr.findIndex((x) => x.hint === c.hint) === i
 );
@@ -201,7 +201,7 @@ export function CommandArea() {
                       return (
                         <button
                           key={o.label}
-                          onClick={() => { setAttachOpen(false); toast(`${o.label} — mock`, "info"); }}
+                          onClick={() => { setAttachOpen(false); toast(`${o.label} - mock`, "info"); }}
                           className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13.5px] transition hover:bg-paper-2"
                         >
                           <Icon size={15} className="text-muted" /> {o.label}
@@ -337,13 +337,13 @@ export function CommandArea() {
 function mockReply(q: string, icpLabel: string): string {
   const lower = q.toLowerCase();
   if (lower.includes("prep")) {
-    return "Here's your brief: you have the context from 3 prior conversations and their public profile. Lead with the retention numbers, and avoid re-litigating the pricing thread from last time — they were sensitive about it. I've drafted 3 opening questions and flagged one open commitment you owe them.";
+    return "Here are your notes: you have the context from 3 prior conversations and their public profile. Lead with the retention numbers, and avoid re-litigating the pricing thread from last time - they were sensitive about it. I've drafted 3 opening questions and flagged one open commitment you owe them.";
   }
   if (lower.includes("commit") || lower.includes("owe")) {
     return "You have 2 open commitments from that thread: send the updated data room (due today) and the hiring plan (due Friday). They owe you 2 customer intros. Want me to draft the nudge?";
   }
   if (lower.includes("draft") || lower.includes("follow")) {
-    return "Drafted — in your voice, grounded in what was actually said in the meeting. It references the 2 decisions you landed and proposes a concrete next step. Review and send, or tell me what to change.";
+    return "Drafted - in your voice, grounded in what was actually said in the meeting. It references the 2 decisions you landed and proposes a concrete next step. Review and send, or tell me what to change.";
   }
-  return `On it. As your ${icpLabel} persona, I pulled from your calendar, meeting recaps, and profile to answer that — everything traces back to a real source, nothing invented. Want me to turn this into an action?`;
+  return `On it. As your ${icpLabel} persona, I pulled from your calendar, meeting recaps, and profile to answer that - everything traces back to a real source, nothing invented. Want me to turn this into an action?`;
 }

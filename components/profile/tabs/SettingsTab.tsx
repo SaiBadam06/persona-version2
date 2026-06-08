@@ -29,7 +29,7 @@ export function SettingsTab() {
       </Section>
 
       <Section title="Notifications">
-        <Toggle label="Pre-meeting briefs" desc="Email a brief before each meeting." defaultOn />
+        <Toggle label="Pre-meeting notes" desc="Email notes before each meeting." defaultOn />
         <Toggle label="Post-meeting recaps" desc="Recap + commitments to your inbox." defaultOn />
         <Toggle label="Weekly digest" desc="What moved, what's open." />
       </Section>
@@ -77,7 +77,7 @@ export function SettingsTab() {
             return (
               <button
                 key={o.label}
-                onClick={() => toast(`${o.label} — mock`, "info")}
+                onClick={() => toast(`${o.label} - mock`, "info")}
                 className="flex w-full items-center gap-3 rounded-xl border border-line bg-paper px-3.5 py-3 text-left text-[13.5px] transition hover:border-line-strong"
               >
                 <Icon size={16} className="text-muted" />

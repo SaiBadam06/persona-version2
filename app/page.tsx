@@ -22,7 +22,7 @@ export default function DashboardPage() {
           </main>
         </div>
 
-        {/* Overlays — every section opens one of these */}
+        {/* Overlays - every section opens one of these */}
         <ProfileModal />
         <MeetingDetailModal />
         <DraftPreviewModal />

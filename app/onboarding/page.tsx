@@ -77,12 +77,12 @@ export default function OnboardingPage() {
       </header>
 
       <main className="mx-auto flex w-full max-w-[720px] flex-1 flex-col justify-center px-6 pb-16">
-        {/* Step 0 — pick ICP */}
+        {/* Step 0 - pick ICP */}
         {step === 0 && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Who are you here as?</h1>
             <p className="mt-1.5 text-[15px] text-muted">
-              We&apos;ll tailor your whole workspace — briefs, prompts, and what shows on your home — to this.
+              We&apos;ll tailor your whole workspace - notes, prompts, and what shows on your home - to this.
             </p>
             <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               {ICP_ORDER.map((id) => {
@@ -111,12 +111,12 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 1 — identity */}
+        {/* Step 1 - identity */}
         {step === 1 && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Let&apos;s find the real you</h1>
             <p className="mt-1.5 text-[15px] text-muted">
-              Connect LinkedIn so your persona is grounded in real, verified facts — never invented.
+              Connect LinkedIn so your persona is grounded in real, verified facts - never invented.
             </p>
             <div className="mt-6 space-y-3">
               <button className="flex w-full items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3.5 transition hover:border-accent">
@@ -134,12 +134,12 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 2 — calendar (the fix: calendar-first, powers every brief) */}
+        {/* Step 2 - calendar (the fix: calendar-first, powers every brief) */}
         {step === 2 && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Connect your calendar</h1>
             <p className="mt-1.5 text-[15px] text-muted">
-              This powers every pre-meeting brief and recap. It&apos;s the core of the loop.
+              This powers every pre-meeting note and recap. It&apos;s the core of the loop.
             </p>
             <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {[
@@ -160,14 +160,14 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 3 — building */}
+        {/* Step 3 - building */}
         {step === 3 && (
           <div className="animate-fade-in text-center">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-soft text-accent">
               <Sparkles size={26} />
             </div>
             <h1 className="mt-5 font-serif text-[28px] tracking-tight">Building your persona…</h1>
-            <p className="mt-1.5 text-[14px] text-muted">Researching you across the web — only real, sourced facts.</p>
+            <p className="mt-1.5 text-[14px] text-muted">Researching you across the web - only real, sourced facts.</p>
             <div className="mx-auto mt-7 max-w-[420px] space-y-2.5 text-left">
               {RESEARCH_STEPS.map((s, i) => {
                 const done = i < research;
@@ -189,7 +189,7 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 4 — live */}
+        {/* Step 4 - live */}
         {step === 4 && icp && (
           <div className="animate-fade-in text-center">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent-soft text-accent">

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+// Modern, technical geometric sans for headings (replaces the old serif).
+const display = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -15,7 +16,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PersonaOn — Command",
+  title: "PersonaOn - Command",
   description:
     "Walk in prepared. Leave with a persona. A new interface direction for PersonaOn.",
 };
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="en" className={`${display.variable} ${inter.variable}`}>
       <body>{children}</body>
     </html>
   );

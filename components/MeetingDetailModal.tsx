@@ -20,7 +20,7 @@ import { Tag } from "./ui/Tag";
 import { cn } from "@/lib/utils";
 
 const TABS = [
-  { id: "brief", label: "Brief", icon: FileText },
+  { id: "brief", label: "Notes", icon: FileText },
   { id: "transcript", label: "Transcript", icon: MessagesSquare },
   { id: "recap", label: "Recap", icon: ClipboardList },
   { id: "actions", label: "Actions", icon: CheckSquare },
@@ -69,7 +69,7 @@ export function MeetingDetailModal() {
             <p className="text-[13px] text-muted">{meeting.withWhom} · {meeting.time}</p>
             <div className="mt-1.5 flex gap-1.5">
               {meeting.tags.map((t) => (
-                <Tag key={t} tone={t.includes("Brief") ? "accent" : "neutral"}>{t}</Tag>
+                <Tag key={t} tone={t.includes("Notes") ? "accent" : "neutral"}>{t}</Tag>
               ))}
             </div>
           </div>
@@ -118,7 +118,7 @@ export function MeetingDetailModal() {
             <div className="animate-fade-in space-y-4">
               {upcoming && (
                 <p className="rounded-lg bg-paper-2 px-3 py-2 text-[12.5px] text-muted">
-                  Sample transcript — your persona records and transcribes live once the meeting starts.
+                  Sample transcript - your persona records and transcribes live once the meeting starts.
                 </p>
               )}
               {d.transcript.map((line, i) => (
@@ -193,11 +193,11 @@ export function MeetingDetailModal() {
             <ClipboardList size={14} /> Open recap
           </button>
           <button
-            onClick={() => toast(upcoming ? "Brief sent to your inbox" : "Recap shared")}
+            onClick={() => toast(upcoming ? "Notes sent to your inbox" : "Recap shared")}
             className="ml-auto flex items-center gap-2 rounded-lg px-3.5 py-2 text-[13px] font-medium text-[var(--accent-ink)] transition"
             style={{ background: "var(--accent)" }}
           >
-            <Send size={14} /> {upcoming ? "Email me this brief" : "Share recap"}
+            <Send size={14} /> {upcoming ? "Email me these notes" : "Share recap"}
           </button>
         </div>
       </div>

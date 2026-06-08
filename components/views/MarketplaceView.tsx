@@ -22,7 +22,7 @@ const PERSONAS: Persona[] = [
   { name: "Alex Chen", initials: "AC", role: "Recruiter · Technical Talent", category: "Recruiters", tagline: "How to stand out in engineering interviews and negotiate offers like you have leverage.", chats: 244 },
   { name: "Priya Nair", initials: "PN", role: "Advisor · GTM Strategy", category: "Advisors", tagline: "Positioning, pricing, and finding the wedge that turns a feature into a real company.", chats: 188 },
   { name: "Marcus Lee", initials: "ML", role: "Investor · Series A", category: "Investors", tagline: "I help founders pressure-test growth stories and prep for the partner meeting grind.", chats: 401 },
-  { name: "Jordan Reyes", initials: "JR", role: "Founder · Consumer Apps", category: "Founders", tagline: "Lessons from two launches and one shutdown — retention beats acquisition, every time.", chats: 276 },
+  { name: "Jordan Reyes", initials: "JR", role: "Founder · Consumer Apps", category: "Founders", tagline: "Lessons from two launches and one shutdown - retention beats acquisition, every time.", chats: 276 },
   { name: "Sam Patel", initials: "SP", role: "Engineer · Staff, Distributed Systems", category: "Engineers", tagline: "Scaling, on-call sanity, and how to grow from senior to staff without burning out.", chats: 333 },
   { name: "Riley Okafor", initials: "RO", role: "Recruiter · Exec & Leadership", category: "Recruiters", tagline: "What hiring managers really screen for when filling director and VP roles.", chats: 159 },
   { name: "Devon Wu", initials: "DW", role: "Advisor · Fundraising Ops", category: "Advisors", tagline: "Building a data room, running a tight raise, and keeping investors warm between rounds.", chats: 207 },

@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// PersonaOn Command — shared types for the mockup
+// PersonaOn Command - shared types for the mockup
 // ---------------------------------------------------------------------------
 
 export type IcpId =
@@ -100,6 +100,7 @@ export type ProfileTab =
   | "persona"
   | "knowledge"
   | "connectors"
+  | "actions"
   | "analysis"
   | "sharing"
   | "settings";
@@ -111,7 +112,6 @@ export type View =
   | "meetings"
   | "routines"
   | "conversations"
-  | "actions"
   | "insights"
   | "marketplace";
 

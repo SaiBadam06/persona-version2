@@ -14,7 +14,7 @@ export function PersonaTab() {
     <div className="animate-fade-in">
       <Section title="Identity" desc="How your persona introduces itself.">
         <Field label="Name" defaultValue="Sai Deekshith Badam" />
-        <Field label="Headline" defaultValue="Founder & Product — building PersonaOn" />
+        <Field label="Headline" defaultValue="Founder & Product - building PersonaOn" />
         <Field
           label="Short bio"
           textarea
@@ -22,7 +22,7 @@ export function PersonaTab() {
         />
       </Section>
 
-      <Section title="Voice & tone" desc="Pick how it sounds. Used in chat, briefs, and recaps.">
+      <Section title="Voice & tone" desc="Pick how it sounds. Used in chat, notes, and recaps.">
         <div className="mb-3 flex flex-wrap gap-2">
           {TONES.map((t) => (
             <button
@@ -58,7 +58,7 @@ export function PersonaTab() {
       <Section title="Boundaries" desc="What it should and shouldn't do on your behalf.">
         <Toggle
           label="Answer only from verified sources"
-          desc="Never invent facts — defer when it doesn't know."
+          desc="Never invent facts - defer when it doesn't know."
           defaultOn
         />
         <Toggle

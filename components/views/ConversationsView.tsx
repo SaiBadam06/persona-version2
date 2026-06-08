@@ -45,11 +45,11 @@ const CONVERSATIONS: {
   channel: Channel;
   time: string;
 }[] = [
-  { id: "c1", initials: "RM", name: "Rachel Mehta", snippet: "Thanks — that pricing breakdown was exactly what I needed.", channel: "Widget", time: "12m" },
+  { id: "c1", initials: "RM", name: "Rachel Mehta", snippet: "Thanks - that pricing breakdown was exactly what I needed.", channel: "Widget", time: "12m" },
   { id: "c2", initials: "DC", name: "Daniel Cho", snippet: "Could you walk me through the onboarding flow once more?", channel: "Public", time: "1h" },
   { id: "c3", initials: "SS", name: "You (notes)", snippet: "Draft answer about roadmap priorities for Q3.", channel: "Owner", time: "2h" },
   { id: "c4", initials: "AO", name: "Amara Okafor", snippet: "Got it, the Slack integration covers our use case.", channel: "Widget", time: "5h" },
-  { id: "c5", initials: "LB", name: "Liam Byrne", snippet: "Loved the public profile — shared it with my team.", channel: "Public", time: "1d" },
+  { id: "c5", initials: "LB", name: "Liam Byrne", snippet: "Loved the public profile - shared it with my team.", channel: "Public", time: "1d" },
   { id: "c6", initials: "PN", name: "Priya Nair", snippet: "When is the next office-hours session?", channel: "Public", time: "2d" },
 ];
 
@@ -67,7 +67,7 @@ export function ConversationsView() {
         <h1 className="font-serif text-[26px] tracking-tight">Conversations</h1>
       </div>
       <p className="text-[14px] text-muted">
-        Everything your persona has handled — plus the questions still waiting on you.
+        Everything your persona has handled - plus the questions still waiting on you.
       </p>
 
       <div className="mt-5 rounded-2xl border border-line bg-surface p-4">
@@ -77,7 +77,7 @@ export function ConversationsView() {
           {queue.length > 0 && <Tag tone="accent">{queue.length}</Tag>}
         </div>
         {queue.length === 0 ? (
-          <p className="py-3 text-[13px] text-muted">All caught up — nothing in the queue.</p>
+          <p className="py-3 text-[13px] text-muted">All caught up - nothing in the queue.</p>
         ) : (
           <div className="space-y-3">
             {queue.map((q) => (

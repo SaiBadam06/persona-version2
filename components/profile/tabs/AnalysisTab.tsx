@@ -7,7 +7,7 @@ import { useApp } from "@/lib/store";
 export function AnalysisTab() {
   const { seedPrompt, closeProfile } = useApp();
   function fill(topic: string) {
-    seedPrompt(`Let's fill a gap in my persona — ask me about: ${topic}`);
+    seedPrompt(`Let's fill a gap in my persona - ask me about: ${topic}`);
     closeProfile();
   }
   return (
@@ -31,7 +31,7 @@ export function AnalysisTab() {
             <span className="absolute text-[22px] font-semibold">82</span>
           </div>
           <div className="flex-1">
-            <p className="text-[14px] font-medium">Strong — ready to represent you</p>
+            <p className="text-[14px] font-medium">Strong - ready to represent you</p>
             <p className="mt-1 text-[12.5px] text-muted">
               Add 2 more meeting recaps and a case study to reach 90+.
             </p>

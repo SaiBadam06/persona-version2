@@ -45,17 +45,17 @@ const FOLLOWUP_DRAFTS: DraftPayload[] = [
     title: "Follow-up email",
     kind: "email",
     to: "Marcus Lee · Accel",
-    body: "Hi Marcus,\n\nGreat speaking today. As promised, the updated data room and the GTM slide are attached. The CAC payback question you raised — short answer is 11 months and trending down; the detail is in tab 3.\n\nHappy to walk through it whenever works.\n\nBest,\nSai",
+    body: "Hi Marcus,\n\nGreat speaking today. As promised, the updated data room and the GTM slide are attached. The CAC payback question you raised - short answer is 11 months and trending down; the detail is in tab 3.\n\nHappy to walk through it whenever works.\n\nBest,\nSai",
   },
   {
-    title: "Recap — last call",
+    title: "Recap - last call",
     kind: "recap",
-    body: "TL;DR\nStrong call. Clear interest, one open question on repeatability.\n\nDecisions\n• Move to a follow-up conversation.\n• Share supporting detail first.\n\nAction items\n• Send the numbers — You\n• Reconnect once reviewed — You",
+    body: "TL;DR\nStrong call. Clear interest, one open question on repeatability.\n\nDecisions\n• Move to a follow-up conversation.\n• Share supporting detail first.\n\nAction items\n• Send the numbers - You\n• Reconnect once reviewed - You",
   },
   {
     title: "Next-step nudge",
     kind: "note",
-    body: "Quick nudge for the 3 deals that have gone quiet:\n• Northwind — waiting on the ROI one-pager (send today)\n• Atlas — map the buying committee\n• Cadence — book the solutions-eng call",
+    body: "Quick nudge for the 3 deals that have gone quiet:\n• Northwind - waiting on the ROI one-pager (send today)\n• Atlas - map the buying committee\n• Cadence - book the solutions-eng call",
   },
 ];
 
@@ -195,10 +195,10 @@ function MeetingRow({ m }: { m: Meeting }) {
           <p className="mt-1.5 text-[13px] leading-snug text-ink-soft">{m.brief}</p>
           <div className="mt-2 flex flex-wrap items-center gap-1.5">
             {m.tags.map((t) => (
-              <Tag key={t} tone={t.includes("Brief") ? "accent" : "neutral"}>{t}</Tag>
+              <Tag key={t} tone={t.includes("Notes") ? "accent" : "neutral"}>{t}</Tag>
             ))}
             <span className="ml-auto flex items-center gap-1 text-[12px] font-medium text-accent">
-              {upcoming ? (<><Play size={12} /> Open brief</>) : (<><ArrowUpRight size={12} /> View recap</>)}
+              {upcoming ? (<><Play size={12} /> Open notes</>) : (<><ArrowUpRight size={12} /> View recap</>)}
             </span>
           </div>
         </div>

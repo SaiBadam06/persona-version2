@@ -13,7 +13,7 @@ export const ICPS: Record<IcpId, IcpConfig> = {
     accent: "#117863",
     accentSoft: "#e3f1ec",
     greeting: "Walk in prepared, {name}",
-    subline: "3 investor meetings today · your persona has briefs ready for each",
+    subline: "3 investor meetings today · your persona has notes ready for each",
     commandPlaceholder: "Prep a meeting, ask your persona, or draft a follow-up…",
     suggestions: [
       "Prep me for my 2pm with Sequoia",
@@ -32,7 +32,7 @@ export const ICPS: Record<IcpId, IcpConfig> = {
     accentSoft: "#efe9fb",
     greeting: "Let your persona pitch, {name}",
     subline: "5 candidate calls today · your persona qualifies and follows up for you",
-    commandPlaceholder: "Brief a candidate call, summarize a screen, or draft outreach…",
+    commandPlaceholder: "Prep a candidate call, summarize a screen, or draft outreach…",
     suggestions: [
       "Prep me for the senior PM screen at 3pm",
       "Summarize today's candidate calls",
@@ -85,7 +85,7 @@ export const ICPS: Record<IcpId, IcpConfig> = {
     accent: "#2f6d4f",
     accentSoft: "#e6f1ea",
     greeting: "Remember every founder, {name}",
-    subline: "4 founder calls today · your persona briefs you and tracks every thesis",
+    subline: "4 founder calls today · your persona preps you and tracks every thesis",
     commandPlaceholder: "Prep a founder call, compare companies, or log a thesis…",
     suggestions: [
       "Prep me for the seed call with Cadence Labs",
@@ -103,7 +103,7 @@ export const ICPS: Record<IcpId, IcpConfig> = {
     accent: "#475569",
     accentSoft: "#eaeef3",
     greeting: "Stay ahead of the day, {name}",
-    subline: "7 meetings today · your persona briefs you and captures every decision",
+    subline: "7 meetings today · your persona preps you and captures every decision",
     commandPlaceholder: "Prep a meeting, ask across your notes, or draft a recap…",
     suggestions: [
       "Prep me for the leadership sync at 11",

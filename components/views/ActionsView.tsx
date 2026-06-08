@@ -36,7 +36,7 @@ const PENDING: PendingAction[] = [
   {
     id: "a3",
     icon: UserPlus,
-    title: "Capture lead — jane@acme.com",
+    title: "Capture lead - jane@acme.com",
     detail: "Asked about enterprise pricing on the site",
   },
 ];
@@ -65,7 +65,7 @@ export function ActionsView() {
         <h1 className="font-serif text-[26px] tracking-tight">Actions</h1>
       </div>
       <p className="text-[14px] text-muted">
-        What your persona can do on your behalf — and what&apos;s waiting for your approval.
+        What your persona can do on your behalf - and what&apos;s waiting for your approval.
       </p>
 
       {/* Approval inbox */}
