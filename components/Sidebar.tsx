@@ -74,24 +74,24 @@ export function Sidebar() {
     >
       {/* Brand + collapse toggle */}
       {sidebarCollapsed ? (
-        <div className="flex flex-col items-center gap-1 px-2 pb-3 pt-5">
+        <div className="flex flex-col items-center px-2 pb-3 pt-4">
           <button
             onClick={toggleSidebar}
             title="Expand sidebar"
-            className="flex h-9 w-9 items-center justify-center rounded-lg transition hover:bg-paper-2"
+            className="flex h-12 w-12 items-center justify-center rounded-lg transition hover:bg-paper-2"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={mark} alt="PersonaOn" className="h-7 w-7 object-contain" />
+            <img src={mark} alt="PersonaOn" className="h-10 w-auto object-contain" />
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between px-5 pb-3 pt-5">
+        <div className="flex items-center justify-between gap-2 px-4 pb-3 pt-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={wordmark} alt="PersonaOn" className="h-7 w-auto" />
+          <img src={wordmark} alt="PersonaOn" className="h-9 w-auto max-w-[172px] object-contain" />
           <button
             onClick={toggleSidebar}
             title="Collapse sidebar"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
           >
             <PanelLeftClose size={17} />
           </button>
