@@ -36,18 +36,18 @@
   --ui-scale: 1;
 }
 
-/* ---- Dark theme: re-declare the same color tokens (warm charcoal) ------- */
+/* ---- Dark theme: re-declare the same color tokens (slate black) --------- */
 html[data-theme="dark"] {
-  --color-paper: #1b1813;
-  --color-paper-2: #221e18;
-  --color-surface: #232019;
-  --color-ink: #f3efe9;
-  --color-ink-soft: #c4bcb0;
-  --color-muted: #948b7e;
-  --color-line: #322d25;
-  --color-line-strong: #443e34;
-  --color-amber: #d08a4a;
-  --color-positive: #4ca777;
+  --color-paper: #0f1216;
+  --color-paper-2: #161b22;
+  --color-surface: #1b212b;
+  --color-ink: #e8ebf1;
+  --color-ink-soft: #aeb7c4;
+  --color-muted: #79828f;
+  --color-line: #242b34;
+  --color-line-strong: #343d49;
+  --color-amber: #e0974f;
+  --color-positive: #46b083;
   --accent-soft: color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
@@ -58,9 +58,9 @@ html[data-contrast="high"] {
   --color-muted: #6b6258;
 }
 html[data-theme="dark"][data-contrast="high"] {
-  --color-line: #4a443a;
-  --color-line-strong: #5e564a;
-  --color-muted: #b3a99c;
+  --color-line: #3a434f;
+  --color-line-strong: #4b5563;
+  --color-muted: #aab4c2;
 }
 
 * {
