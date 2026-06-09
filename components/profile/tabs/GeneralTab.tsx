@@ -46,18 +46,16 @@ export function GeneralTab() {
           />
         </div>
 
-        <div className="mb-5">
-          <ToggleRow
-            label="Deep black"
-            desc={
-              resolvedTheme === "dark"
-                ? "Use a true-black background — easier on OLED screens."
-                : "Use a true-black background in dark mode — easier on OLED screens."
-            }
-            on={darkStyle === "black"}
-            onChange={(v) => setDarkStyle(v ? "black" : "slate")}
-          />
-        </div>
+        {resolvedTheme === "dark" && (
+          <div className="mb-5">
+            <ToggleRow
+              label="Deep black"
+              desc="Use a true-black background — easier on OLED screens."
+              on={darkStyle === "black"}
+              onChange={(v) => setDarkStyle(v ? "black" : "slate")}
+            />
+          </div>
+        )}
 
         <div>
           <p className="mb-2 text-[12px] font-medium text-muted">
