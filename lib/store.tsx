@@ -40,6 +40,10 @@ interface AppState {
   openProfile: (tab?: ProfileTab) => void;
   closeProfile: () => void;
   setProfileTab: (tab: ProfileTab) => void;
+  // Sidebar collapse (ChatGPT-style)
+  sidebarCollapsed: boolean;
+  toggleSidebar: () => void;
+  setSidebarCollapsed: (v: boolean) => void;
   // Meeting detail modal
   detailMeetingId: string | null;
   openMeeting: (id: string) => void;
@@ -73,6 +77,7 @@ interface AppState {
 const Ctx = createContext<AppState | null>(null);
 
 const ICP_KEY = "personaon:icp";
+const SIDEBAR_KEY = "personaon:sidebar";
 const THEME_KEY = "personaon:theme";
 const SCALE_KEY = "personaon:scale";
 const CONTRAST_KEY = "personaon:contrast";
@@ -102,6 +107,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return "founder";
   });
   const [view, setView] = useState<View>("home");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(() => {
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem(SIDEBAR_KEY) === "1";
+    }
+    return false;
+  });
   const [profileOpen, setProfileOpen] = useState(false);
   const [profileTab, setProfileTab] = useState<ProfileTab>("persona");
   const [detailMeetingId, setDetailMeetingId] = useState<string | null>(null);
@@ -187,6 +198,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     window.localStorage.setItem(ICP_KEY, icp);
   }, [icp, effectiveAccent]);
 
+  // Persist sidebar collapse.
+  useEffect(() => {
+    window.localStorage.setItem(SIDEBAR_KEY, sidebarCollapsed ? "1" : "0");
+  }, [sidebarCollapsed]);
+
   // Persist accent overrides.
   useEffect(() => {
     window.localStorage.setItem(ACCENTS_KEY, JSON.stringify(accentOverrides));
@@ -256,6 +272,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       closeProfile: () => setProfileOpen(false),
       setProfileTab,
+      sidebarCollapsed,
+      toggleSidebar: () => setSidebarCollapsed((v) => !v),
+      setSidebarCollapsed,
       detailMeetingId,
       openMeeting: (id) => setDetailMeetingId(id),
       closeMeeting: () => setDetailMeetingId(null),
@@ -297,6 +316,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     [
       icp,
       view,
+      sidebarCollapsed,
       profileOpen,
       profileTab,
       detailMeetingId,

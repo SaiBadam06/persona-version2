@@ -9,6 +9,7 @@ import {
   BarChart3,
   Store,
   ChevronRight,
+  PanelLeftClose,
   type LucideIcon,
 } from "lucide-react";
 import { useApp } from "@/lib/store";
@@ -37,7 +38,11 @@ const RECENT = [
 ];
 
 export function Sidebar() {
-  const { view, setView, openProfile, resolvedTheme } = useApp();
+  const { view, setView, openProfile, resolvedTheme, sidebarCollapsed, toggleSidebar } =
+    useApp();
+
+  const mark = resolvedTheme === "dark" ? "/pictorial_white.png" : "/pictorial_black.png";
+  const wordmark = resolvedTheme === "dark" ? "/personaon_white.png" : "/personaon_black.png";
 
   function NavButton({ item }: { item: { id: View; label: string; icon: LucideIcon } }) {
     const Icon = item.icon;
@@ -45,66 +50,121 @@ export function Sidebar() {
     return (
       <button
         onClick={() => setView(item.id)}
+        title={sidebarCollapsed ? item.label : undefined}
         className={cn(
-          "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-[14px] transition",
+          "flex w-full items-center rounded-lg text-[14px] transition",
+          sidebarCollapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2",
           active
             ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] ring-1 ring-line"
             : "text-ink-soft hover:bg-paper-2"
         )}
       >
         <Icon size={17} className={active ? "text-accent" : "text-muted"} />
-        {item.label}
+        {!sidebarCollapsed && item.label}
       </button>
     );
   }
 
   return (
-    <aside className="flex h-full w-[252px] shrink-0 flex-col border-r border-line bg-paper">
-      {/* Brand — theme-aware logo (black on light, white on dark) */}
-      <div className="flex items-center px-5 pb-3 pt-5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={resolvedTheme === "dark" ? "/personaon_white.png" : "/personaon_black.png"}
-          alt="PersonaOn"
-          className="h-7 w-auto"
-        />
-      </div>
+    <aside
+      className={cn(
+        "flex h-full shrink-0 flex-col border-r border-line bg-paper transition-[width] duration-200 ease-out",
+        sidebarCollapsed ? "w-[68px]" : "w-[252px]"
+      )}
+    >
+      {/* Brand + collapse toggle */}
+      {sidebarCollapsed ? (
+        <div className="flex flex-col items-center gap-1 px-2 pb-3 pt-5">
+          <button
+            onClick={toggleSidebar}
+            title="Expand sidebar"
+            className="flex h-9 w-9 items-center justify-center rounded-lg transition hover:bg-paper-2"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={mark} alt="PersonaOn" className="h-7 w-7 object-contain" />
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between px-5 pb-3 pt-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={wordmark} alt="PersonaOn" className="h-7 w-auto" />
+          <button
+            onClick={toggleSidebar}
+            title="Collapse sidebar"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
+          >
+            <PanelLeftClose size={17} />
+          </button>
+        </div>
+      )}
 
       {/* Scrollable nav */}
-      <div className="flex-1 overflow-y-auto px-3">
+      <div className={cn("flex-1 overflow-y-auto", sidebarCollapsed ? "px-2" : "px-3")}>
         <div className="space-y-0.5">
           {PRIMARY.map((item) => <NavButton key={item.id} item={item} />)}
         </div>
 
-        <p className="px-3 pb-1 pt-5 text-[11px] font-medium uppercase tracking-wider text-muted">Workspace</p>
-        <div className="space-y-0.5">
+        {!sidebarCollapsed && (
+          <p className="px-3 pb-1 pt-5 text-[11px] font-medium uppercase tracking-wider text-muted">
+            Workspace
+          </p>
+        )}
+        <div className={cn("space-y-0.5", sidebarCollapsed && "mt-2")}>
           {WORKSPACE.map((item) => <NavButton key={item.id} item={item} />)}
         </div>
 
-        <p className="px-3 pb-1 pt-5 text-[11px] font-medium uppercase tracking-wider text-muted">Recent</p>
-        <div className="space-y-0.5 pb-2">
-          {RECENT.map((r) => (
-            <button key={r} onClick={() => setView("home")} className="block w-full truncate rounded-lg px-3 py-1.5 text-left text-[13px] text-ink-soft hover:bg-paper-2">
-              {r}
-            </button>
-          ))}
-        </div>
+        {!sidebarCollapsed && (
+          <>
+            <p className="px-3 pb-1 pt-5 text-[11px] font-medium uppercase tracking-wider text-muted">
+              Recent
+            </p>
+            <div className="space-y-0.5 pb-2">
+              {RECENT.map((r) => (
+                <button
+                  key={r}
+                  onClick={() => setView("home")}
+                  className="block w-full truncate rounded-lg px-3 py-1.5 text-left text-[13px] text-ink-soft hover:bg-paper-2"
+                >
+                  {r}
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       {/* Slim status line */}
-      <button onClick={() => openProfile("connectors")} className="mx-3 mb-2 flex items-center gap-2 rounded-lg px-2 py-1.5 text-[12px] text-muted transition hover:bg-paper-2">
-        <span className="h-2 w-2 rounded-full bg-[#2f8a5b]" />
-        Context enabled · 6 apps
+      <button
+        onClick={() => openProfile("connectors")}
+        title={sidebarCollapsed ? "Context enabled · 6 apps" : undefined}
+        className={cn(
+          "mb-2 flex items-center rounded-lg text-[12px] text-muted transition hover:bg-paper-2",
+          sidebarCollapsed ? "mx-2 justify-center px-0 py-2" : "mx-3 gap-2 px-2 py-1.5"
+        )}
+      >
+        <span className="h-2 w-2 shrink-0 rounded-full bg-[#2f8a5b]" />
+        {!sidebarCollapsed && "Context enabled · 6 apps"}
       </button>
 
       {/* User chip → profile popup */}
-      <button onClick={() => openProfile("persona")} className="m-3 mt-0 flex items-center gap-3 rounded-xl border border-line bg-surface px-3 py-2.5 text-left transition hover:border-line-strong">
-        <Avatar initials={USER.initials} size={34} />
-        <span className="min-w-0 flex-1">
-          <span className="block truncate text-[13.5px] font-medium">{USER.fullName}</span>
-          <span className="block text-[12px] text-muted">{USER.plan} · Edit persona</span>
-        </span>
-        <ChevronRight size={16} className="text-muted" />
+      <button
+        onClick={() => openProfile("persona")}
+        title={sidebarCollapsed ? USER.fullName : undefined}
+        className={cn(
+          "flex items-center rounded-xl border border-line bg-surface text-left transition hover:border-line-strong",
+          sidebarCollapsed ? "mx-2 mb-3 justify-center px-0 py-2" : "m-3 mt-0 gap-3 px-3 py-2.5"
+        )}
+      >
+        <Avatar initials={USER.initials} size={sidebarCollapsed ? 30 : 34} />
+        {!sidebarCollapsed && (
+          <>
+            <span className="min-w-0 flex-1">
+              <span className="block truncate text-[13.5px] font-medium">{USER.fullName}</span>
+              <span className="block text-[12px] text-muted">{USER.plan} · Edit persona</span>
+            </span>
+            <ChevronRight size={16} className="text-muted" />
+          </>
+        )}
       </button>
     </aside>
   );
