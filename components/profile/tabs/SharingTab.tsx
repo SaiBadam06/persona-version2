@@ -60,8 +60,8 @@ export function SharingTab() {
       </Section>
 
       <Section title="Embed on your site" desc="Drop this snippet anywhere - a chat bubble appears in your voice.">
-        <div className="rounded-xl border border-line bg-ink/95 p-3.5">
-          <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[11.5px] leading-relaxed text-white/90">{`<script src="https://personaon.com/widget.js"
+        <div className="rounded-xl border border-line bg-surface p-3.5">
+          <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-[11.5px] leading-relaxed text-ink-soft">{`<script src="https://personaon.com/widget.js"
   data-persona="sai-badam"
   data-mode="bubble"></script>`}</pre>
         </div>
