@@ -37,7 +37,7 @@ const RECENT = [
 ];
 
 export function Sidebar() {
-  const { view, setView, openProfile } = useApp();
+  const { view, setView, openProfile, resolvedTheme } = useApp();
 
   function NavButton({ item }: { item: { id: View; label: string; icon: LucideIcon } }) {
     const Icon = item.icon;
@@ -60,14 +60,14 @@ export function Sidebar() {
 
   return (
     <aside className="flex h-full w-[252px] shrink-0 flex-col border-r border-line bg-paper">
-      {/* Brand */}
-      <div className="flex items-center gap-2 px-5 pb-3 pt-5">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg text-[var(--accent-ink)]" style={{ background: "var(--accent)" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M5 18V8a4 4 0 0 1 8 0 4 4 0 0 0 6 3.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-          </svg>
-        </span>
-        <span className="font-serif text-[18px] font-semibold tracking-tight">PersonaOn</span>
+      {/* Brand — theme-aware logo (black on light, white on dark) */}
+      <div className="flex items-center px-5 pb-3 pt-5">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={resolvedTheme === "dark" ? "/personaon_white.png" : "/personaon_black.png"}
+          alt="PersonaOn"
+          className="h-7 w-auto"
+        />
       </div>
 
       {/* Scrollable nav */}

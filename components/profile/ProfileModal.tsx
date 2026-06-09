@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import {
   X,
+  SlidersHorizontal,
   UserRound,
   BookOpen,
   Plug,
@@ -22,9 +23,11 @@ import { ConnectorsTab } from "./tabs/ConnectorsTab";
 import { AnalysisTab } from "./tabs/AnalysisTab";
 import { SharingTab } from "./tabs/SharingTab";
 import { SettingsTab } from "./tabs/SettingsTab";
+import { GeneralTab } from "./tabs/GeneralTab";
 import { ActionsView } from "../views/ActionsView";
 
 const TABS: { id: ProfileTab; label: string; icon: typeof UserRound }[] = [
+  { id: "general", label: "General", icon: SlidersHorizontal },
   { id: "persona", label: "Persona", icon: UserRound },
   { id: "knowledge", label: "Knowledge", icon: BookOpen },
   { id: "connectors", label: "Connectors", icon: Plug },
@@ -103,6 +106,7 @@ export function ProfileModal() {
             </button>
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">
+            {profileTab === "general" && <GeneralTab />}
             {profileTab === "persona" && <PersonaTab />}
             {profileTab === "knowledge" && <KnowledgeTab />}
             {profileTab === "connectors" && <ConnectorsTab />}

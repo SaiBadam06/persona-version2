@@ -97,6 +97,7 @@ export interface ChatMessage {
 }
 
 export type ProfileTab =
+  | "general"
   | "persona"
   | "knowledge"
   | "connectors"
@@ -104,6 +105,35 @@ export type ProfileTab =
   | "analysis"
   | "sharing"
   | "settings";
+
+// --- Appearance & accessibility preferences -------------------------------
+
+/** User-selected theme mode. "system" follows prefers-color-scheme. */
+export type ThemeMode = "light" | "dark" | "system";
+/** The concrete theme actually applied after resolving "system". */
+export type ResolvedTheme = "light" | "dark";
+/** UI text/zoom scale presets. */
+export type TextScale = "comfortable" | "large" | "larger";
+/** Border/text contrast mode. */
+export type ContrastMode = "normal" | "high";
+
+/** Stable ids for the app's rebindable keyboard shortcuts. */
+export type ShortcutId =
+  | "search"
+  | "new-ask"
+  | "open-profile"
+  | "switch-persona"
+  | "toggle-theme";
+
+/** A single key combination bound to a shortcut. */
+export interface ShortcutBinding {
+  /** event.key, lowercased for single characters (e.g. "n", "/", ","). */
+  key: string;
+  ctrl?: boolean;
+  meta?: boolean;
+  shift?: boolean;
+  alt?: boolean;
+}
 
 /** Which main-area view the left nav is showing. */
 export type View =

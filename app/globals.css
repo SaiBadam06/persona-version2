@@ -28,10 +28,39 @@
 }
 
 :root {
-  /* per-ICP accent, overridden at runtime on <html> */
+  /* per-persona accent, overridden at runtime on <html> by the store */
   --accent: #117863;
-  --accent-soft: #e3f1ec;
   --accent-ink: #ffffff;
+  /* accent-soft is derived from --accent so it works in either theme */
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, white);
+  --ui-scale: 1;
+}
+
+/* ---- Dark theme: re-declare the same color tokens (warm charcoal) ------- */
+html[data-theme="dark"] {
+  --color-paper: #1b1813;
+  --color-paper-2: #221e18;
+  --color-surface: #232019;
+  --color-ink: #f3efe9;
+  --color-ink-soft: #c4bcb0;
+  --color-muted: #948b7e;
+  --color-line: #322d25;
+  --color-line-strong: #443e34;
+  --color-amber: #d08a4a;
+  --color-positive: #4ca777;
+  --accent-soft: color-mix(in srgb, var(--accent) 24%, transparent);
+}
+
+/* ---- High contrast: strengthen borders & muted text, both themes -------- */
+html[data-contrast="high"] {
+  --color-line: #cfc6b8;
+  --color-line-strong: #b3a899;
+  --color-muted: #6b6258;
+}
+html[data-theme="dark"][data-contrast="high"] {
+  --color-line: #4a443a;
+  --color-line-strong: #5e564a;
+  --color-muted: #b3a99c;
 }
 
 * {
@@ -44,6 +73,11 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Text-size control — scales the whole UI (design uses fixed-px sizing). */
+body {
+  zoom: var(--ui-scale, 1);
 }
 
 .font-serif {
