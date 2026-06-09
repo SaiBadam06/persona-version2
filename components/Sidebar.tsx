@@ -52,14 +52,14 @@ export function Sidebar() {
         onClick={() => setView(item.id)}
         title={sidebarCollapsed ? item.label : undefined}
         className={cn(
-          "flex w-full items-center rounded-lg text-[14px] transition",
-          sidebarCollapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2",
+          "flex w-full items-center rounded-lg text-[14.5px] transition",
+          sidebarCollapsed ? "justify-center px-0 py-3" : "gap-3.5 px-3 py-2.5",
           active
             ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] ring-1 ring-line"
             : "text-ink-soft hover:bg-paper-2"
         )}
       >
-        <Icon size={17} className={active ? "text-accent" : "text-muted"} />
+        <Icon size={20} className={active ? "text-accent" : "text-muted"} />
         {!sidebarCollapsed && item.label}
       </button>
     );
@@ -91,9 +91,9 @@ export function Sidebar() {
           <button
             onClick={toggleSidebar}
             title="Collapse sidebar"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
           >
-            <PanelLeftClose size={17} />
+            <PanelLeftClose size={20} />
           </button>
         </div>
       )}

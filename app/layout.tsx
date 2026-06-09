@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${inter.variable}`}>
+    <html lang="en" className={`${display.variable} ${inter.variable}`} suppressHydrationWarning>
       <head>
         {/* Apply saved theme/contrast/scale before paint to avoid a flash. */}
         <script
