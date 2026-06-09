@@ -12,16 +12,31 @@ import {
   Globe,
   FileText,
 } from "lucide-react";
-import { ICPS, ICP_ORDER } from "@/lib/icps";
+import { ICPS, ICP_ORDER, GOALS, evaluateIcp } from "@/lib/icps";
 import type { IcpId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const STEPS = ["You", "Identity", "Calendar", "Building", "Live"];
+const STEPS = ["Role", "Goal", "Challenges", "Tools", "Identity", "Calendar", "Building", "Live"];
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
   const [icp, setIcp] = useState<IcpId | null>(null);
   const [research, setResearch] = useState(0);
+  const [role, setRole] = useState("");
+  const [goal, setGoal] = useState("");
+  const [challenge, setChallenge] = useState("");
+  const [toolsStr, setToolsStr] = useState("");
+  const [isParsingLinkedIn, setIsParsingLinkedIn] = useState(false);
+
+  const handleLinkedInDetect = () => {
+    setIsParsingLinkedIn(true);
+    // Simulate AI parsing of LinkedIn data
+    setTimeout(() => {
+      setRole("sales"); // Example simulated detection
+      setGoal("manage_pipeline"); // Example simulated detection
+      setIsParsingLinkedIn(false);
+    }, 1500);
+  };
 
   // Live-tint the page to the chosen ICP, and remember it for the dashboard.
   useEffect(() => {
@@ -34,13 +49,13 @@ export default function OnboardingPage() {
 
   // Fake the research pass on the "Building" step, then advance.
   useEffect(() => {
-    if (step !== 3) return;
+    if (step !== 6) return;
     setResearch(0);
     const t = setInterval(() => {
       setResearch((r) => {
         if (r >= RESEARCH_STEPS.length - 1) {
           clearInterval(t);
-          setTimeout(() => setStep(4), 700);
+          setTimeout(() => setStep(7), 700);
           return r;
         }
         return r + 1;
@@ -77,42 +92,199 @@ export default function OnboardingPage() {
       </header>
 
       <main className="mx-auto flex w-full max-w-[720px] flex-1 flex-col justify-center px-6 pb-16">
-        {/* Step 0 - pick ICP */}
+        {/* Step 0 - assessment */}
         {step === 0 && (
           <div className="animate-fade-in">
-            <h1 className="font-serif text-[30px] tracking-tight">Who are you here as?</h1>
+            <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
-              We&apos;ll tailor your whole workspace - notes, prompts, and what shows on your home - to this.
+              We&apos;ll tailor your workspace to how you actually spend your time.
             </p>
-            <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-              {ICP_ORDER.map((id) => {
-                const c = ICPS[id];
-                const active = icp === id;
-                return (
-                  <button
-                    key={id}
-                    onClick={() => setIcp(id)}
+            <div className="mt-6 space-y-4">
+              {/* LinkedIn AI Auto-detect */}
+              <button 
+                onClick={handleLinkedInDetect}
+                disabled={isParsingLinkedIn}
+                className="group flex w-full items-center justify-center gap-2 rounded-xl border px-4 py-3.5 text-[14.5px] font-medium transition disabled:opacity-70"
+                style={{ 
+                  borderColor: "var(--accent)", 
+                  backgroundColor: isParsingLinkedIn ? "var(--accent)" : "transparent",
+                  color: isParsingLinkedIn ? "white" : "var(--accent)"
+                }}
+              >
+                {isParsingLinkedIn ? (
+                  <Loader2 size={18} className="animate-spin text-white" />
+                ) : (
+                  <Linkedin size={18} className="text-accent group-hover:text-white transition" style={{ color: "var(--accent)" }} />
+                )}
+                <span className="transition" style={{ color: isParsingLinkedIn ? "white" : "var(--accent)" }}>
+                  {isParsingLinkedIn ? "Analyzing profile..." : "Auto-detect with LinkedIn"}
+                </span>
+                {/* Embedded hover styles since inline hover is hard */}
+                <style dangerouslySetInnerHTML={{__html: `
+                  .group:hover { background-color: var(--accent) !important; color: white !important; }
+                  .group:hover span, .group:hover svg { color: white !important; }
+                `}} />
+              </button>
+
+              <div className="flex items-center gap-3 text-[12px] text-muted pt-2 pb-1">
+                <span className="h-px flex-1 bg-line" /> or select manually <span className="h-px flex-1 bg-line" />
+              </div>
+
+              <div>
+                <label className="block text-[13.5px] font-medium text-ink mb-2">Your role</label>
+                <div className="relative">
+                  <select 
+                    autoFocus
                     className={cn(
-                      "flex items-center gap-3 rounded-2xl border bg-surface px-4 py-3.5 text-left transition",
-                      active ? "border-accent ring-1 ring-accent" : "border-line hover:border-line-strong"
+                      "w-full appearance-none rounded-xl border border-line bg-surface px-4 py-3 pr-10 text-[14px] outline-none focus:border-accent transition",
+                      role === "" ? "text-muted" : "text-ink"
                     )}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
                   >
-                    <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: c.accent }} />
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-[14.5px] font-medium">{c.label}</span>
-                      <span className="block text-[12.5px] text-muted">{c.blurb}</span>
-                    </span>
-                    {active && <Check size={17} style={{ color: c.accent }} />}
-                  </button>
-                );
-              })}
+                    <option value="" disabled>Select your role...</option>
+                    <option value="founder">Founder / CEO</option>
+                    <option value="recruiter">Recruiter / Talent</option>
+                    <option value="consultant">Consultant / Agency</option>
+                    <option value="sales">Sales & Account Manager</option>
+                    <option value="investor">Investor / VC</option>
+                    <option value="executive">Manager & Executive</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-muted">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
-            <Footer onNext={() => setStep(1)} disabled={!icp} />
+            <Footer onNext={() => setStep(1)} disabled={!role.trim()} />
           </div>
         )}
 
-        {/* Step 1 - identity */}
+        {/* Step 1 - Goal */}
         {step === 1 && (
+          <div className="animate-fade-in">
+            <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
+            <p className="mt-1.5 text-[15px] text-muted">
+              We&apos;ll tailor your workspace to how you actually spend your time.
+            </p>
+            <div className="mt-6 space-y-4">
+              <div>
+                <label className="block text-[13.5px] font-medium text-ink mb-2">What&apos;s your primary goal?</label>
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {GOALS.map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => setGoal(g.id)}
+                      className={cn(
+                        "flex items-center gap-3 rounded-2xl border bg-surface px-4 py-3.5 text-left transition text-[13.5px]",
+                        goal === g.id ? "border-accent ring-1 ring-accent text-[var(--accent-ink)]" : "border-line hover:border-line-strong text-ink-soft"
+                      )}
+                      style={goal === g.id ? { background: "var(--accent)" } : undefined}
+                    >
+                      <span className="flex-1 font-medium">{g.label}</span>
+                      {goal === g.id && <Check size={16} />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <Footer 
+              onBack={() => setStep(0)} 
+              onNext={() => setStep(2)} 
+              disabled={!goal} 
+            />
+          </div>
+        )}
+
+        {/* Step 2 - Challenges */}
+        {step === 2 && (
+          <div className="animate-fade-in">
+            <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
+            <p className="mt-1.5 text-[15px] text-muted">
+              We&apos;ll tailor your workspace to how you actually spend your time.
+            </p>
+            <div className="mt-6 space-y-4">
+              <div>
+                <label className="block text-[13.5px] font-medium text-ink mb-2">What&apos;s your biggest daily challenge?</label>
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {[
+                    { id: "pipeline", label: "Managing my pipeline" },
+                    { id: "meetings", label: "Prepping for meetings" },
+                    { id: "context", label: "Context switching" },
+                    { id: "leads", label: "Sourcing leads" },
+                  ].map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => setChallenge(g.id)}
+                      className={cn(
+                        "flex items-center gap-3 rounded-2xl border bg-surface px-4 py-3.5 text-left transition text-[13.5px]",
+                        challenge === g.id ? "border-accent ring-1 ring-accent text-[var(--accent-ink)]" : "border-line hover:border-line-strong text-ink-soft"
+                      )}
+                      style={challenge === g.id ? { background: "var(--accent)" } : undefined}
+                    >
+                      <span className="flex-1 font-medium">{g.label}</span>
+                      {challenge === g.id && <Check size={16} />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <Footer 
+              onBack={() => setStep(1)} 
+              onNext={() => setStep(3)} 
+              disabled={!challenge} 
+            />
+          </div>
+        )}
+
+        {/* Step 3 - Tools */}
+        {step === 3 && (
+          <div className="animate-fade-in">
+            <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
+            <p className="mt-1.5 text-[15px] text-muted">
+              We&apos;ll tailor your workspace to how you actually spend your time.
+            </p>
+            <div className="mt-6 space-y-4">
+              <div>
+                <label className="block text-[13.5px] font-medium text-ink mb-2">What tools do you rely on most?</label>
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                  {[
+                    { id: "crm", label: "CRM (Salesforce/Hubspot)" },
+                    { id: "docs", label: "Docs (Notion/Google)" },
+                    { id: "email", label: "Email (Superhuman/Gmail)" },
+                    { id: "chat", label: "Chat (Slack/Teams)" },
+                  ].map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => setToolsStr(g.id)}
+                      className={cn(
+                        "flex items-center gap-3 rounded-2xl border bg-surface px-4 py-3.5 text-left transition text-[13.5px]",
+                        toolsStr === g.id ? "border-accent ring-1 ring-accent text-[var(--accent-ink)]" : "border-line hover:border-line-strong text-ink-soft"
+                      )}
+                      style={toolsStr === g.id ? { background: "var(--accent)" } : undefined}
+                    >
+                      <span className="flex-1 font-medium">{g.label}</span>
+                      {toolsStr === g.id && <Check size={16} />}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <Footer 
+              onBack={() => setStep(2)} 
+              onNext={() => {
+                setIcp(evaluateIcp(role, goal));
+                setStep(4);
+              }} 
+              disabled={!toolsStr} 
+            />
+          </div>
+        )}
+
+        {/* Step 4 - identity */}
+        {step === 4 && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Let&apos;s find the real you</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -130,12 +302,12 @@ export default function OnboardingPage() {
               <input placeholder="Full name" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
               <input placeholder="LinkedIn or website URL" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
             </div>
-            <Footer onNext={() => setStep(2)} onBack={() => setStep(0)} />
+            <Footer onNext={() => setStep(5)} onBack={() => setStep(3)} />
           </div>
         )}
 
-        {/* Step 2 - calendar (the fix: calendar-first, powers every brief) */}
-        {step === 2 && (
+        {/* Step 5 - calendar (the fix: calendar-first, powers every brief) */}
+        {step === 5 && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Connect your calendar</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -153,15 +325,15 @@ export default function OnboardingPage() {
                 </button>
               ))}
             </div>
-            <button onClick={() => setStep(3)} className="mt-4 text-[13px] text-muted underline-offset-2 hover:underline">
+            <button onClick={() => setStep(6)} className="mt-4 text-[13px] text-muted underline-offset-2 hover:underline">
               I&apos;ll connect later
             </button>
-            <Footer onNext={() => setStep(3)} onBack={() => setStep(1)} nextLabel="Build my persona" />
+            <Footer onNext={() => setStep(6)} onBack={() => setStep(4)} nextLabel="Build my persona" />
           </div>
         )}
 
-        {/* Step 3 - building */}
-        {step === 3 && (
+        {/* Step 6 - building */}
+        {step === 6 && (
           <div className="animate-fade-in text-center">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-soft text-accent">
               <Sparkles size={26} />
@@ -189,8 +361,8 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* Step 4 - live */}
-        {step === 4 && icp && (
+        {/* Step 7 - live */}
+        {step === 7 && icp && (
           <div className="animate-fade-in text-center">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent-soft text-accent">
               <Check size={30} />

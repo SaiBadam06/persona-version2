@@ -124,3 +124,33 @@ export const ICP_ORDER: IcpId[] = [
   "investor",
   "executive",
 ];
+
+export const GOALS = [
+  { id: "manage_pipeline", label: "Manage deal pipeline" },
+  { id: "prep_investors", label: "Prep for investor pitches" },
+  { id: "screen_candidates", label: "Screen candidates efficiently" },
+  { id: "scope_engagements", label: "Scope client engagements" },
+  { id: "track_dealflow", label: "Track deal flow and theses" },
+  { id: "stay_ahead", label: "Stay ahead of back-to-back meetings" },
+];
+
+/** Evaluates the user's input to determine their Ideal Customer Profile */
+export function evaluateIcp(role: string, goal: string): IcpId {
+  const lowerRole = role.toLowerCase();
+  
+  if (lowerRole.includes("founder") || lowerRole.includes("ceo")) return "founder";
+  if (lowerRole.includes("recruit") || lowerRole.includes("talent") || lowerRole.includes("hr")) return "recruiter";
+  if (lowerRole.includes("consultant") || lowerRole.includes("freelance") || lowerRole.includes("agency")) return "consultant";
+  if (lowerRole.includes("sales") || lowerRole.includes("account") || lowerRole.includes("ae") || lowerRole.includes("bd")) return "sales";
+  if (lowerRole.includes("investor") || lowerRole.includes("vc") || lowerRole.includes("partner") || lowerRole.includes("angel")) return "investor";
+  if (lowerRole.includes("manager") || lowerRole.includes("executive") || lowerRole.includes("vp") || lowerRole.includes("director") || lowerRole.includes("chief") || lowerRole.includes("lead") || lowerRole.includes("head")) return "executive";
+
+  if (goal === "manage_pipeline") return "sales";
+  if (goal === "prep_investors") return "founder";
+  if (goal === "screen_candidates") return "recruiter";
+  if (goal === "scope_engagements") return "consultant";
+  if (goal === "track_dealflow") return "investor";
+  if (goal === "stay_ahead") return "executive";
+
+  return "executive";
+}

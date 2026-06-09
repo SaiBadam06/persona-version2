@@ -58,7 +58,7 @@ export function TopBar() {
         >
           Onboarding
         </Link>
-        <IcpSwitcher />
+        {process.env.NODE_ENV === "development" && <IcpSwitcher />}
       </div>
     </header>
   );
