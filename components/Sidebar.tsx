@@ -74,7 +74,7 @@ export function Sidebar() {
     >
       {/* Brand + collapse toggle */}
       {sidebarCollapsed ? (
-        <div className="flex flex-col items-center px-2 pb-3 pt-4">
+        <div className="flex flex-col items-center px-2 pb-2 mb-4 pt-4">
           <button
             onClick={toggleSidebar}
             title="Expand sidebar"
@@ -85,7 +85,7 @@ export function Sidebar() {
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between gap-2 px-4 pb-3 pt-5">
+        <div className="flex items-center justify-between gap-2 px-4 pb-2 mb-4 pt-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={wordmark} alt="PersonaOn" className="h-9 w-auto max-w-[172px] object-contain" />
           <button
@@ -100,7 +100,7 @@ export function Sidebar() {
 
       {/* Scrollable nav */}
       <div className={cn("flex-1 overflow-y-auto", sidebarCollapsed ? "px-2" : "px-3")}>
-        <div className="space-y-0.5">
+        <div className="space-y-0.5 pt-1">
           {PRIMARY.map((item) => <NavButton key={item.id} item={item} />)}
         </div>
 
