@@ -42,7 +42,7 @@ export function DraftPreviewModal() {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/30 backdrop-blur-[2px]" onClick={closeDraft} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={closeDraft} />
       <div className="relative flex h-[600px] max-h-[90vh] w-full max-w-[620px] animate-scale-in flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/20">
         <div className="flex items-center gap-3 border-b border-line px-6 py-4">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent-soft text-accent">

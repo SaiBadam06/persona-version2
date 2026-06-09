@@ -15,7 +15,7 @@ export function Tag({
         "inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-medium leading-5",
         tone === "neutral" && "bg-paper-2 text-muted",
         tone === "accent" && "bg-accent-soft text-accent",
-        tone === "positive" && "bg-[#e6f1ea] text-[#2f8a5b]",
+        tone === "positive" && "bg-positive/15 text-positive",
         className
       )}
     >

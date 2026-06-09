@@ -142,7 +142,7 @@ export function Sidebar() {
           sidebarCollapsed ? "mx-2 justify-center px-0 py-2" : "mx-3 gap-2 px-2 py-1.5"
         )}
       >
-        <span className="h-2 w-2 shrink-0 rounded-full bg-[#2f8a5b]" />
+        <span className="h-2 w-2 shrink-0 rounded-full bg-positive" />
         {!sidebarCollapsed && "Context enabled · 6 apps"}
       </button>
 

@@ -53,7 +53,7 @@ export function ProfileModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-ink/30 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
         onClick={closeProfile}
       />
       <div className="relative flex h-[660px] max-h-[92vh] w-full max-w-[940px] animate-scale-in overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/20">

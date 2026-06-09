@@ -49,7 +49,7 @@ export function KnowledgeTab() {
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
                     k.status === "synced"
-                      ? "bg-[#e6f1ea] text-[#2f8a5b]"
+                      ? "bg-positive/15 text-positive"
                       : "bg-accent-soft text-accent"
                   }`}
                 >

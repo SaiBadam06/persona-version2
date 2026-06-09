@@ -59,7 +59,7 @@ export function MeetingDetailModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink/30 backdrop-blur-[2px]" onClick={closeMeeting} />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={closeMeeting} />
       <div className="relative flex h-[680px] max-h-[92vh] w-full max-w-[760px] animate-scale-in flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-2xl shadow-black/20">
         {/* Header */}
         <div className="flex items-start gap-3 border-b border-line px-6 py-4">

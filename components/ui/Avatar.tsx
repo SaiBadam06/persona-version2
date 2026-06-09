@@ -24,7 +24,7 @@ export function Avatar({
         fontSize: size * 0.38,
         background: accent
           ? "var(--accent)"
-          : "linear-gradient(135deg,#efe9e1,#e2dace)",
+          : "linear-gradient(135deg,var(--color-paper-2),var(--color-line-strong))",
         border: "1px solid var(--color-line)",
       }}
     >

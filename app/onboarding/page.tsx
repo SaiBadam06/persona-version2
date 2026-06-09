@@ -27,6 +27,16 @@ export default function OnboardingPage() {
   const [challenge, setChallenge] = useState("");
   const [toolsStr, setToolsStr] = useState("");
   const [isParsingLinkedIn, setIsParsingLinkedIn] = useState(false);
+  // Onboarding lives outside AppProvider; read the theme the anti-flash script set.
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    const root = document.documentElement;
+    const sync = () => setIsDark(root.getAttribute("data-theme") === "dark");
+    sync();
+    const obs = new MutationObserver(sync);
+    obs.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
 
   const handleLinkedInDetect = () => {
     setIsParsingLinkedIn(true);
@@ -43,7 +53,7 @@ export default function OnboardingPage() {
     if (!icp) return;
     const c = ICPS[icp];
     document.documentElement.style.setProperty("--accent", c.accent);
-    document.documentElement.style.setProperty("--accent-soft", c.accentSoft);
+    // --accent-soft is derived from --accent in CSS (color-mix), so it adapts per theme.
     window.localStorage.setItem("personaon:icp", icp);
   }, [icp]);
 
@@ -68,15 +78,12 @@ export default function OnboardingPage() {
     <div className="flex min-h-screen flex-col bg-paper">
       {/* Header + progress */}
       <header className="flex items-center gap-3 px-6 py-5">
-        <span
-          className="flex h-7 w-7 items-center justify-center rounded-lg text-[var(--accent-ink)]"
-          style={{ background: "var(--accent)" }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M5 18V8a4 4 0 0 1 8 0 4 4 0 0 0 6 3.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-          </svg>
-        </span>
-        <span className="font-serif text-[18px] font-semibold">PersonaOn</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={isDark ? "/personaon_white.png" : "/personaon_black.png"}
+          alt="PersonaOn"
+          className="h-8 w-auto object-contain"
+        />
         <div className="ml-auto flex items-center gap-1.5">
           {STEPS.map((s, i) => (
             <span

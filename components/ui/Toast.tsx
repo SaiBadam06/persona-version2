@@ -38,10 +38,10 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((t) => (
           <div
             key={t.id}
-            className="animate-fade-in flex items-center gap-2.5 rounded-xl border border-line bg-ink px-4 py-2.5 text-[13.5px] font-medium text-white shadow-xl shadow-black/20"
+            className="animate-fade-in flex items-center gap-2.5 rounded-xl border border-line bg-ink px-4 py-2.5 text-[13.5px] font-medium text-paper shadow-xl shadow-black/20"
           >
             <span
-              className="flex h-5 w-5 items-center justify-center rounded-full"
+              className="flex h-5 w-5 items-center justify-center rounded-full text-[var(--accent-ink)]"
               style={{ background: "var(--accent)" }}
             >
               {t.tone === "ok" ? <Check size={12} /> : <Info size={12} />}
