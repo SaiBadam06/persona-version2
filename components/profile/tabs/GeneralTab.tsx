@@ -11,6 +11,9 @@ export function GeneralTab() {
   const {
     theme,
     setTheme,
+    resolvedTheme,
+    darkStyle,
+    setDarkStyle,
     effectiveAccent,
     accentOverrides,
     setAccentForIcp,
@@ -40,6 +43,19 @@ export function GeneralTab() {
               { value: "dark", label: "Dark" },
               { value: "system", label: "System" },
             ]}
+          />
+        </div>
+
+        <div className="mb-5">
+          <ToggleRow
+            label="Deep black"
+            desc={
+              resolvedTheme === "dark"
+                ? "Use a true-black background — easier on OLED screens."
+                : "Use a true-black background in dark mode — easier on OLED screens."
+            }
+            on={darkStyle === "black"}
+            onChange={(v) => setDarkStyle(v ? "black" : "slate")}
           />
         </div>
 

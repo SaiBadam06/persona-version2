@@ -112,6 +112,8 @@ export type ProfileTab =
 export type ThemeMode = "light" | "dark" | "system";
 /** The concrete theme actually applied after resolving "system". */
 export type ResolvedTheme = "light" | "dark";
+/** Dark-mode flavor: cool slate or deep OLED black. */
+export type DarkStyle = "slate" | "black";
 /** UI text/zoom scale presets. */
 export type TextScale = "comfortable" | "large" | "larger";
 /** Border/text contrast mode. */

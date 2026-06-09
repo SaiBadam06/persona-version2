@@ -51,6 +51,15 @@ html[data-theme="dark"] {
   --accent-soft: color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
+/* ---- Deep black (OLED) variant of the dark theme ------------------------ */
+html[data-theme="dark"][data-dark="black"] {
+  --color-paper: #000000;
+  --color-paper-2: #0b0d11;
+  --color-surface: #111318;
+  --color-line: #1d222a;
+  --color-line-strong: #2b323c;
+}
+
 /* ---- High contrast: strengthen borders & muted text, both themes -------- */
 html[data-contrast="high"] {
   --color-line: #cfc6b8;

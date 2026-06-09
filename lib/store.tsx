@@ -21,6 +21,7 @@ import type {
   DraftPayload,
   ThemeMode,
   ResolvedTheme,
+  DarkStyle,
   TextScale,
   ContrastMode,
   ShortcutId,
@@ -60,6 +61,8 @@ interface AppState {
   theme: ThemeMode;
   setTheme: (t: ThemeMode) => void;
   resolvedTheme: ResolvedTheme;
+  darkStyle: DarkStyle;
+  setDarkStyle: (s: DarkStyle) => void;
   effectiveAccent: string;
   accentOverrides: AccentOverrides;
   setAccentForIcp: (hex: string | null) => void;
@@ -79,6 +82,7 @@ const Ctx = createContext<AppState | null>(null);
 const ICP_KEY = "personaon:icp";
 const SIDEBAR_KEY = "personaon:sidebar";
 const THEME_KEY = "personaon:theme";
+const DARKSTYLE_KEY = "personaon:darkstyle";
 const SCALE_KEY = "personaon:scale";
 const CONTRAST_KEY = "personaon:contrast";
 
@@ -128,6 +132,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return "system";
   });
   const [systemDark, setSystemDark] = useState(false);
+  const [darkStyle, setDarkStyle] = useState<DarkStyle>(() => {
+    if (typeof window !== "undefined") {
+      return window.localStorage.getItem(DARKSTYLE_KEY) === "black"
+        ? "black"
+        : "slate";
+    }
+    return "slate";
+  });
   const [accentOverrides, setAccentOverrides] = useState<AccentOverrides>(() =>
     readJSON<AccentOverrides>(ACCENTS_KEY, {})
   );
@@ -174,6 +186,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.setAttribute("data-theme", resolvedTheme);
     window.localStorage.setItem(THEME_KEY, theme);
   }, [resolvedTheme, theme]);
+
+  // Apply dark style (slate vs deep black) + persist.
+  useEffect(() => {
+    document.documentElement.setAttribute("data-dark", darkStyle);
+    window.localStorage.setItem(DARKSTYLE_KEY, darkStyle);
+  }, [darkStyle]);
 
   // Apply contrast + persist.
   useEffect(() => {
@@ -290,6 +308,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       theme,
       setTheme,
       resolvedTheme,
+      darkStyle,
+      setDarkStyle,
       effectiveAccent,
       accentOverrides,
       setAccentForIcp: (hex) =>
@@ -324,6 +344,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       seededPrompt,
       theme,
       resolvedTheme,
+      darkStyle,
       effectiveAccent,
       accentOverrides,
       textScale,

@@ -32,7 +32,7 @@ export default function RootLayout({
         {/* Apply saved theme/contrast/scale before paint to avoid a flash. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var r=document.documentElement;var t=localStorage.getItem('personaon:theme')||'system';var dark=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);r.setAttribute('data-theme',dark?'dark':'light');r.setAttribute('data-contrast',localStorage.getItem('personaon:contrast')||'normal');var s=localStorage.getItem('personaon:scale')||'comfortable';var m={comfortable:1,large:1.1,larger:1.22}[s]||1;r.style.setProperty('--ui-scale',String(m));}catch(e){}})();`,
+            __html: `(function(){try{var r=document.documentElement;var t=localStorage.getItem('personaon:theme')||'system';var dark=t==='dark'||(t==='system'&&window.matchMedia('(prefers-color-scheme: dark)').matches);r.setAttribute('data-theme',dark?'dark':'light');r.setAttribute('data-dark',localStorage.getItem('personaon:darkstyle')==='black'?'black':'slate');r.setAttribute('data-contrast',localStorage.getItem('personaon:contrast')||'normal');var s=localStorage.getItem('personaon:scale')||'comfortable';var m={comfortable:1,large:1.1,larger:1.22}[s]||1;r.style.setProperty('--ui-scale',String(m));}catch(e){}})();`,
           }}
         />
       </head>
