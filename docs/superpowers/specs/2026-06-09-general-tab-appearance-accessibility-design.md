@@ -13,7 +13,7 @@ Add a **General** tab to the profile popup (ChatGPT-style), containing two secti
 
 This introduces the app's **first real dark mode** and a working theme/preference engine. Today the app is light-only, themed entirely through CSS variables, with the accent already runtime-switchable per ICP. We extend that mechanism rather than replace it.
 
-A new **brand logo** (saved by the user to `/public`) is shown in light mode; dark mode keeps the existing inline mark.
+A new **brand logo** is theme-aware: the black wordmark on the light theme, the white wordmark on the dark theme (both saved by the user to `/public`).
 
 ## Goals
 
@@ -22,12 +22,11 @@ A new **brand logo** (saved by the user to `/public`) is shown in light mode; da
 - A warm dark palette that keeps the brand feel (not cold black) and is legible.
 - Per-persona accent override from a fixed swatch palette, defaulting to each ICP's accent.
 - Accessibility: text scaling, high-contrast mode, and a functional rebindable shortcuts system.
-- Swap in the user-provided logo for light mode.
+- Swap in the user-provided logo, theme-aware (black on light, white on dark).
 
 ## Non-Goals
 
 - Reduce-motion and reduce-transparency toggles (deferred — not selected).
-- A dark/inverted variant of the new logo (light mode only for now).
 - Per-persona theme (theme is global; only the accent is per-persona).
 - Backend persistence — all preferences live in `localStorage`, consistent with the existing `personaon:icp` key.
 
@@ -112,9 +111,10 @@ New `lib/shortcuts.ts`:
 
 ### Logo
 
-- User saves the asset to `public/personaon-logo.png` (PNG/webp/SVG accepted).
-- [Sidebar.tsx:64-71](../../../components/Sidebar.tsx#L64-L71) brand lockup: in **light** resolved theme, render the asset via `next/image` (height-constrained, e.g. ~22px, `priority`); in **dark**, render the existing inline waveform mark + wordmark unchanged.
-- Same treatment optionally applied to any other brand lockup (none currently besides Sidebar).
+- User saves two assets to `/public`: `personaon_black` (for the light theme) and `personaon_white` (for the dark theme). PNG/webp/SVG accepted; the exact filenames/extensions are matched to whatever the user drops in.
+- [Sidebar.tsx:64-71](../../../components/Sidebar.tsx#L64-L71) brand lockup renders the logo via `next/image` (height-constrained, e.g. ~22px, `priority`), selecting the asset by **resolved theme**: black on light, white on dark. The chosen variant is keyed off the same resolved-theme value the store writes to `data-theme`.
+- Fallback: if an asset is missing, render the existing inline waveform mark + wordmark so the app never breaks.
+- Same treatment applies to any other brand lockup (none currently besides Sidebar).
 
 ## New shared controls (`components/profile/tabs/parts.tsx`)
 
@@ -166,9 +166,9 @@ Manual (reference UI, no test runner assumed):
 3. Accent: change accent for one persona; switch personas → others keep defaults; "Match persona default" reverts; survives reload.
 4. Text size and High contrast apply app-wide and persist.
 5. Shortcuts: each default key fires its action; keys don't fire while typing in inputs; record a new combo; conflict is rejected; reset restores default; survives reload.
-6. Logo: new logo shows in light mode; dark mode shows the inline mark.
+6. Logo: black logo shows on the light theme, white logo on the dark theme; switching theme swaps the variant; missing asset falls back to the inline mark.
 
 ## Open assumptions
 
-- Logo asset will exist at `public/personaon-logo.png` before/at implementation; if absent, the light-mode branch falls back to the inline mark so the app never breaks.
+- Logo assets (`personaon_black` for light, `personaon_white` for dark) will exist in `/public` before/at implementation; if either is absent, that theme's branch falls back to the inline mark so the app never breaks.
 - `zoom` is acceptable for text scaling given the px-based design (documented trade-off vs. a full rem refactor, which is out of scope).
