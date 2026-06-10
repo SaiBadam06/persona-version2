@@ -52,14 +52,14 @@ export function Sidebar() {
         onClick={() => setView(item.id)}
         title={sidebarCollapsed ? item.label : undefined}
         className={cn(
-          "flex w-full items-center rounded-lg text-[14.5px] transition",
-          sidebarCollapsed ? "justify-center px-0 py-3" : "gap-3.5 px-3 py-2.5",
+          "flex w-full items-center rounded-lg text-[14px] transition",
+          sidebarCollapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2",
           active
             ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] ring-1 ring-line"
             : "text-ink-soft hover:bg-paper-2"
         )}
       >
-        <Icon size={20} className={active ? "text-accent" : "text-muted"} />
+        <Icon size={17} className={active ? "text-accent" : "text-muted"} />
         {!sidebarCollapsed && item.label}
       </button>
     );
@@ -74,7 +74,7 @@ export function Sidebar() {
     >
       {/* Brand + collapse toggle */}
       {sidebarCollapsed ? (
-        <div className="flex flex-col items-center px-2 pb-2 mb-4 pt-4">
+        <div className="flex flex-col items-center px-2 pb-3 pt-4">
           <button
             onClick={toggleSidebar}
             title="Expand sidebar"
@@ -85,22 +85,22 @@ export function Sidebar() {
           </button>
         </div>
       ) : (
-        <div className="flex items-center justify-between gap-2 px-4 pb-2 mb-4 pt-5">
+        <div className="flex items-center justify-between gap-2 px-4 pb-3 pt-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={wordmark} alt="PersonaOn" className="h-9 w-auto max-w-[172px] object-contain" />
           <button
             onClick={toggleSidebar}
             title="Collapse sidebar"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted transition hover:bg-paper-2"
           >
-            <PanelLeftClose size={20} />
+            <PanelLeftClose size={17} />
           </button>
         </div>
       )}
 
       {/* Scrollable nav */}
       <div className={cn("flex-1 overflow-y-auto", sidebarCollapsed ? "px-2" : "px-3")}>
-        <div className="space-y-0.5 pt-1">
+        <div className="space-y-0.5">
           {PRIMARY.map((item) => <NavButton key={item.id} item={item} />)}
         </div>
 
