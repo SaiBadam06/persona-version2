@@ -123,7 +123,7 @@ export default function OnboardingPage() {
               meetings later — and you approve every fact before it goes public.
             </p>
 
-            <div className="mt-6 mx-auto flex w-fit rounded-xl border border-line bg-paper p-0.5">
+            <div className="mt-6 flex w-full rounded-xl border border-line bg-paper p-0.5">
               {[
                 { id: "link", label: "Paste a link" },
                 { id: "text", label: "Answer one question" },
@@ -136,7 +136,7 @@ export default function OnboardingPage() {
                     setSeedValue("");
                   }}
                   className={cn(
-                    "rounded-lg px-3.5 py-1.5 text-[13px] font-medium transition",
+                    "flex-1 rounded-lg px-3.5 py-1.5 text-center text-[13px] font-medium transition",
                     seedMode === m.id
                       ? "bg-surface text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] ring-1 ring-line"
                       : "text-muted hover:text-ink-soft"
