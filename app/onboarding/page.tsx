@@ -16,7 +16,9 @@ import { ICPS, ONBOARDING_QUESTIONS, evaluateIcp } from "@/lib/icps";
 import type { IcpId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const STEPS = ["Role", "Goal", "Challenges", "Tools", "Identity", "Calendar", "Building", "Live"];
+const STEPS = ["Persona", "Role", "Goal", "Challenges", "Tools", "Calendar", "Building", "Live"];
+
+type SeedMode = "link" | "text" | "resume";
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
@@ -26,6 +28,8 @@ export default function OnboardingPage() {
   const [goal, setGoal] = useState("");
   const [challenge, setChallenge] = useState("");
   const [toolsStr, setToolsStr] = useState("");
+  const [seedMode, setSeedMode] = useState<SeedMode>("link");
+  const [seedValue, setSeedValue] = useState("");
   const [isParsingLinkedIn, setIsParsingLinkedIn] = useState(false);
   // Onboarding lives outside AppProvider; read the theme the anti-flash script set.
   const [isDark, setIsDark] = useState(false);
@@ -109,8 +113,120 @@ export default function OnboardingPage() {
       </header>
 
       <main className="mx-auto flex w-full max-w-[720px] flex-1 flex-col justify-center px-6 pb-16">
-        {/* Step 0 - assessment */}
+        {/* Step 0 - persona seed (asked first) */}
         {step === 0 && (
+          <div className="animate-fade-in">
+            <p className="text-[12.5px] font-medium text-muted">Step 1 · 60 seconds</p>
+            <h1 className="mt-1 font-serif text-[30px] tracking-tight">Tell us who your persona is.</h1>
+            <p className="mt-1.5 text-[15px] text-muted">
+              We&apos;ll seed your persona with what&apos;s already public about you. It grows from your
+              meetings later — and you approve every fact before it goes public.
+            </p>
+
+            <div className="mt-6 inline-flex rounded-xl border border-line bg-paper p-0.5">
+              {[
+                { id: "link", label: "Paste a link" },
+                { id: "text", label: "Answer one question" },
+                { id: "resume", label: "Upload resume" },
+              ].map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => {
+                    setSeedMode(m.id as SeedMode);
+                    setSeedValue("");
+                  }}
+                  className={cn(
+                    "rounded-lg px-3.5 py-1.5 text-[13px] font-medium transition",
+                    seedMode === m.id
+                      ? "bg-surface text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)] ring-1 ring-line"
+                      : "text-muted hover:text-ink-soft"
+                  )}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-4">
+              {seedMode === "link" && (
+                <>
+                  <label className="flex items-center gap-2.5 rounded-xl border border-line bg-surface px-4 py-3 focus-within:border-accent">
+                    <Globe size={16} className="shrink-0 text-muted" />
+                    <input
+                      type="url"
+                      value={seedValue}
+                      onChange={(e) => setSeedValue(e.target.value)}
+                      placeholder="linkedin.com/in/your-name · yoursite.com · github.com/you"
+                      className="w-full bg-transparent text-[14px] outline-none placeholder:text-muted"
+                    />
+                  </label>
+                  <p className="mt-2 text-[12.5px] text-muted">
+                    We&apos;ll extract your bio, role, and expertise. Takes about 20 seconds.
+                  </p>
+                </>
+              )}
+              {seedMode === "text" && (
+                <>
+                  <textarea
+                    rows={4}
+                    value={seedValue}
+                    onChange={(e) => setSeedValue(e.target.value)}
+                    placeholder="In a few sentences: what do you want to be known for?"
+                    className="w-full resize-none rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none placeholder:text-muted focus:border-accent"
+                  />
+                  <p className="mt-2 text-[12.5px] text-muted">
+                    This becomes your persona&apos;s voice for visitors. You can edit it any time.
+                  </p>
+                </>
+              )}
+              {seedMode === "resume" && (
+                <>
+                  <label className="flex cursor-pointer flex-col items-start rounded-xl border border-dashed border-line-strong bg-surface px-4 py-6 transition hover:border-accent">
+                    <span className="flex items-center gap-2 text-[14px] text-ink">
+                      <FileText size={16} className="text-muted" /> Drop a PDF — resume, bio, or pitch deck.
+                    </span>
+                    <span className="mt-1 text-[12.5px] text-muted">We pull facts, never share the file.</span>
+                    <input
+                      type="file"
+                      accept=".pdf"
+                      className="hidden"
+                      onChange={(e) => setSeedValue(e.target.files?.[0]?.name ?? "")}
+                    />
+                  </label>
+                  <p className="mt-2 text-[12.5px] text-muted">{seedValue ? `Selected: ${seedValue}` : "PDF only. Max 10 MB."}</p>
+                </>
+              )}
+            </div>
+
+            <div className="mt-5 flex items-start gap-2.5 rounded-xl bg-paper-2 px-4 py-3 text-[13px] text-ink-soft">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-ink text-[11px] font-medium text-paper">A</span>
+              <span>
+                Your persona starts at about <strong className="font-semibold text-ink">30% public-ready</strong> after
+                this. It grows every time you approve a meeting memory.
+              </span>
+            </div>
+
+            <div className="mt-8 flex items-center gap-3">
+              <button
+                onClick={() => setStep(1)}
+                className="rounded-full px-4 py-2.5 text-[14px] text-muted transition hover:bg-paper-2"
+              >
+                I&apos;ll set this up later
+              </button>
+              <button
+                onClick={() => setStep(1)}
+                disabled={seedMode !== "resume" && !seedValue.trim()}
+                className="ml-auto inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[14px] font-medium text-[var(--accent-ink)] transition disabled:opacity-40"
+                style={{ background: "var(--accent)" }}
+              >
+                Continue <ArrowRight size={16} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Step 1 - role */}
+        {step === 1 && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -175,12 +291,12 @@ export default function OnboardingPage() {
                 </div>
               </div>
             </div>
-            <Footer onNext={() => setStep(1)} disabled={!role.trim()} />
+            <Footer onBack={() => setStep(0)} onNext={() => setStep(2)} disabled={!role.trim()} />
           </div>
         )}
 
-        {/* Step 1 - Goal */}
-        {step === 1 && questions && (
+        {/* Step 2 - Goal */}
+        {step === 2 && questions && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -207,16 +323,16 @@ export default function OnboardingPage() {
                 </div>
               </div>
             </div>
-            <Footer 
-              onBack={() => setStep(0)} 
-              onNext={() => setStep(2)} 
-              disabled={!goal} 
+            <Footer
+              onBack={() => setStep(1)}
+              onNext={() => setStep(3)}
+              disabled={!goal}
             />
           </div>
         )}
 
-        {/* Step 2 - Challenges */}
-        {step === 2 && questions && (
+        {/* Step 3 - Challenges */}
+        {step === 3 && questions && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -243,16 +359,16 @@ export default function OnboardingPage() {
                 </div>
               </div>
             </div>
-            <Footer 
-              onBack={() => setStep(1)} 
-              onNext={() => setStep(3)} 
-              disabled={!challenge} 
+            <Footer
+              onBack={() => setStep(2)}
+              onNext={() => setStep(4)}
+              disabled={!challenge}
             />
           </div>
         )}
 
-        {/* Step 3 - Tools */}
-        {step === 3 && questions && (
+        {/* Step 4 - Tools */}
+        {step === 4 && questions && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -279,37 +395,14 @@ export default function OnboardingPage() {
                 </div>
               </div>
             </div>
-            <Footer 
-              onBack={() => setStep(2)} 
+            <Footer
+              onBack={() => setStep(3)}
               onNext={() => {
                 setIcp(evaluateIcp(role, goal));
-                setStep(4);
-              }} 
-              disabled={!toolsStr} 
+                setStep(5);
+              }}
+              disabled={!toolsStr}
             />
-          </div>
-        )}
-
-        {/* Step 4 - identity */}
-        {step === 4 && (
-          <div className="animate-fade-in">
-            <h1 className="font-serif text-[30px] tracking-tight">Let&apos;s find the real you</h1>
-            <p className="mt-1.5 text-[15px] text-muted">
-              Connect LinkedIn so your persona is grounded in real, verified facts - never invented.
-            </p>
-            <div className="mt-6 space-y-3">
-              <button className="flex w-full items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3.5 transition hover:border-accent">
-                <Linkedin size={18} className="text-accent" />
-                <span className="flex-1 text-left text-[14.5px] font-medium">Connect LinkedIn</span>
-                <span className="text-[12px] text-muted">Recommended</span>
-              </button>
-              <div className="flex items-center gap-3 text-[12px] text-muted">
-                <span className="h-px flex-1 bg-line" /> or enter manually <span className="h-px flex-1 bg-line" />
-              </div>
-              <input placeholder="Full name" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
-              <input placeholder="Website or portfolio URL" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
-            </div>
-            <Footer onNext={() => setStep(5)} onBack={() => setStep(3)} />
           </div>
         )}
 
