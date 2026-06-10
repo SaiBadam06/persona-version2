@@ -12,7 +12,7 @@ import {
   Globe,
   FileText,
 } from "lucide-react";
-import { ICPS, ICP_ORDER, GOALS, evaluateIcp } from "@/lib/icps";
+import { ICPS, ONBOARDING_QUESTIONS, evaluateIcp } from "@/lib/icps";
 import type { IcpId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -43,10 +43,20 @@ export default function OnboardingPage() {
     // Simulate AI parsing of LinkedIn data
     setTimeout(() => {
       setRole("sales"); // Example simulated detection
-      setGoal("manage_pipeline"); // Example simulated detection
       setIsParsingLinkedIn(false);
     }, 1500);
   };
+
+  // The role chosen in step 0 is an IcpId, which drives the branched questions.
+  const selectedIcp = role && role in ICPS ? (role as IcpId) : null;
+  const questions = selectedIcp ? ONBOARDING_QUESTIONS[selectedIcp] : null;
+
+  // Clear branched answers when the role changes so stale selections don't linger.
+  useEffect(() => {
+    setGoal("");
+    setChallenge("");
+    setToolsStr("");
+  }, [role]);
 
   // Live-tint the page to the chosen ICP, and remember it for the dashboard.
   useEffect(() => {
@@ -170,17 +180,17 @@ export default function OnboardingPage() {
         )}
 
         {/* Step 1 - Goal */}
-        {step === 1 && (
+        {step === 1 && questions && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
-              We&apos;ll tailor your workspace to how you actually spend your time.
+              Tailoring for <span className="font-medium text-accent">{ICPS[selectedIcp!].label}</span> — what matters most to you?
             </p>
             <div className="mt-6 space-y-4">
               <div>
                 <label className="block text-[13.5px] font-medium text-ink mb-2">What&apos;s your primary goal?</label>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  {GOALS.map((g) => (
+                  {questions.goals.map((g) => (
                     <button
                       key={g.id}
                       onClick={() => setGoal(g.id)}
@@ -206,7 +216,7 @@ export default function OnboardingPage() {
         )}
 
         {/* Step 2 - Challenges */}
-        {step === 2 && (
+        {step === 2 && questions && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -216,12 +226,7 @@ export default function OnboardingPage() {
               <div>
                 <label className="block text-[13.5px] font-medium text-ink mb-2">What&apos;s your biggest daily challenge?</label>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  {[
-                    { id: "pipeline", label: "Managing my pipeline" },
-                    { id: "meetings", label: "Prepping for meetings" },
-                    { id: "context", label: "Context switching" },
-                    { id: "leads", label: "Sourcing leads" },
-                  ].map((g) => (
+                  {questions.challenges.map((g) => (
                     <button
                       key={g.id}
                       onClick={() => setChallenge(g.id)}
@@ -247,7 +252,7 @@ export default function OnboardingPage() {
         )}
 
         {/* Step 3 - Tools */}
-        {step === 3 && (
+        {step === 3 && questions && (
           <div className="animate-fade-in">
             <h1 className="font-serif text-[30px] tracking-tight">Tell us about your work</h1>
             <p className="mt-1.5 text-[15px] text-muted">
@@ -257,12 +262,7 @@ export default function OnboardingPage() {
               <div>
                 <label className="block text-[13.5px] font-medium text-ink mb-2">What tools do you rely on most?</label>
                 <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                  {[
-                    { id: "crm", label: "CRM (Salesforce/Hubspot)" },
-                    { id: "docs", label: "Docs (Notion/Google)" },
-                    { id: "email", label: "Email (Superhuman/Gmail)" },
-                    { id: "chat", label: "Chat (Slack/Teams)" },
-                  ].map((g) => (
+                  {questions.tools.map((g) => (
                     <button
                       key={g.id}
                       onClick={() => setToolsStr(g.id)}
@@ -307,7 +307,7 @@ export default function OnboardingPage() {
                 <span className="h-px flex-1 bg-line" /> or enter manually <span className="h-px flex-1 bg-line" />
               </div>
               <input placeholder="Full name" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
-              <input placeholder="LinkedIn or website URL" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
+              <input placeholder="Website or portfolio URL" className="w-full rounded-xl border border-line bg-surface px-4 py-3 text-[14px] outline-none focus:border-accent" />
             </div>
             <Footer onNext={() => setStep(5)} onBack={() => setStep(3)} />
           </div>

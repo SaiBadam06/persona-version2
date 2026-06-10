@@ -134,6 +134,144 @@ export const GOALS = [
   { id: "stay_ahead", label: "Stay ahead of back-to-back meetings" },
 ];
 
+// ---------------------------------------------------------------------------
+// Onboarding questions, tailored per ICP. The role chosen in step 0 maps
+// directly to an IcpId, so the Goal / Challenge / Tools steps branch on it.
+// ---------------------------------------------------------------------------
+
+export interface OnbOption {
+  id: string;
+  label: string;
+}
+export interface OnbQuestionSet {
+  goals: OnbOption[];
+  challenges: OnbOption[];
+  tools: OnbOption[];
+}
+
+export const ONBOARDING_QUESTIONS: Record<IcpId, OnbQuestionSet> = {
+  founder: {
+    goals: [
+      { id: "raise_round", label: "Raise the next round" },
+      { id: "keep_investors_updated", label: "Keep investors updated" },
+      { id: "recruit_hires", label: "Recruit key hires" },
+      { id: "track_commitments", label: "Stay on top of commitments" },
+    ],
+    challenges: [
+      { id: "investor_prep", label: "Prepping investor meetings" },
+      { id: "remember_promises", label: "Remembering what I promised" },
+      { id: "context", label: "Context switching" },
+      { id: "recruiting", label: "Recruiting outreach" },
+    ],
+    tools: [
+      { id: "investor_crm", label: "Investor tracker / CRM" },
+      { id: "docs", label: "Docs (Notion/Google)" },
+      { id: "email", label: "Email (Gmail)" },
+      { id: "calendar", label: "Calendar" },
+    ],
+  },
+  recruiter: {
+    goals: [
+      { id: "screen_faster", label: "Screen candidates faster" },
+      { id: "warm_pipeline", label: "Keep my pipeline warm" },
+      { id: "candidate_experience", label: "Improve candidate experience" },
+      { id: "close_roles", label: "Close roles faster" },
+    ],
+    challenges: [
+      { id: "screen_prep", label: "Prepping candidate screens" },
+      { id: "chase_feedback", label: "Chasing hiring-manager feedback" },
+      { id: "scheduling", label: "Scheduling interviews" },
+      { id: "repeating_pitch", label: "Repeating the same pitch" },
+    ],
+    tools: [
+      { id: "ats", label: "ATS (Greenhouse/Lever)" },
+      { id: "linkedin", label: "LinkedIn" },
+      { id: "email", label: "Email" },
+      { id: "calendar", label: "Calendar" },
+    ],
+  },
+  consultant: {
+    goals: [
+      { id: "win_engagements", label: "Win more engagements" },
+      { id: "scope_faster", label: "Scope projects faster" },
+      { id: "calls_to_deliverables", label: "Turn calls into deliverables" },
+      { id: "keep_clients_updated", label: "Keep clients updated" },
+    ],
+    challenges: [
+      { id: "discovery_prep", label: "Prepping discovery calls" },
+      { id: "proposals", label: "Writing proposals & recaps" },
+      { id: "track_commitments", label: "Tracking client commitments" },
+      { id: "follow_up", label: "Following up to book next steps" },
+    ],
+    tools: [
+      { id: "crm", label: "CRM" },
+      { id: "docs", label: "Docs (Notion/Google)" },
+      { id: "email", label: "Email" },
+      { id: "calendar", label: "Calendar" },
+    ],
+  },
+  sales: {
+    goals: [
+      { id: "manage_pipeline", label: "Manage my pipeline" },
+      { id: "crm_honest", label: "Keep the CRM honest" },
+      { id: "never_miss_followup", label: "Never miss a follow-up" },
+      { id: "research_accounts", label: "Research accounts" },
+    ],
+    challenges: [
+      { id: "account_prep", label: "Account & deal prep" },
+      { id: "crm_hygiene", label: "CRM hygiene" },
+      { id: "quiet_accounts", label: "Accounts going quiet" },
+      { id: "next_steps", label: "Drafting next-step emails" },
+    ],
+    tools: [
+      { id: "crm", label: "CRM (Salesforce/HubSpot)" },
+      { id: "email", label: "Email" },
+      { id: "chat", label: "Chat (Slack/Teams)" },
+      { id: "calendar", label: "Calendar" },
+    ],
+  },
+  investor: {
+    goals: [
+      { id: "track_dealflow", label: "Track deal flow & theses" },
+      { id: "remember_founders", label: "Remember every founder" },
+      { id: "make_intros", label: "Make warm intros" },
+      { id: "portfolio_updated", label: "Keep portfolio updated" },
+    ],
+    challenges: [
+      { id: "founder_prep", label: "Prepping founder calls" },
+      { id: "track_theses", label: "Tracking theses" },
+      { id: "compare_companies", label: "Comparing companies" },
+      { id: "intro_followup", label: "Following up on intros" },
+    ],
+    tools: [
+      { id: "deal_tracker", label: "Deal tracker (Affinity)" },
+      { id: "docs", label: "Docs (Notion)" },
+      { id: "email", label: "Email" },
+      { id: "calendar", label: "Calendar" },
+    ],
+  },
+  executive: {
+    goals: [
+      { id: "stay_ahead", label: "Stay ahead of meetings" },
+      { id: "capture_decisions", label: "Capture decisions" },
+      { id: "followup_1on1s", label: "Follow up on 1:1s" },
+      { id: "align_team", label: "Keep my team aligned" },
+    ],
+    challenges: [
+      { id: "meeting_prep", label: "Prepping back-to-backs" },
+      { id: "context", label: "Context switching" },
+      { id: "decisions", label: "Capturing decisions" },
+      { id: "followups", label: "1:1 follow-ups" },
+    ],
+    tools: [
+      { id: "docs", label: "Docs (Notion/Google)" },
+      { id: "chat", label: "Chat (Slack/Teams)" },
+      { id: "email", label: "Email" },
+      { id: "calendar", label: "Calendar" },
+    ],
+  },
+};
+
 /** Evaluates the user's input to determine their Ideal Customer Profile */
 export function evaluateIcp(role: string, goal: string): IcpId {
   const lowerRole = role.toLowerCase();
