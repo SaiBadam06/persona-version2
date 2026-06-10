@@ -123,7 +123,7 @@ export default function OnboardingPage() {
               meetings later — and you approve every fact before it goes public.
             </p>
 
-            <div className="mt-6 inline-flex rounded-xl border border-line bg-paper p-0.5">
+            <div className="mt-6 mx-auto flex w-fit rounded-xl border border-line bg-paper p-0.5">
               {[
                 { id: "link", label: "Paste a link" },
                 { id: "text", label: "Answer one question" },
