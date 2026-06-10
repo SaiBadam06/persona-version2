@@ -43,7 +43,7 @@ export function SearchView() {
   }, [q, meetings, openMeeting, openProfile]);
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-6 py-9 animate-fade-in">
+    <div className="mx-auto w-full max-w-[820px] px-6 py-9 animate-fade-in">
       <h1 className="mb-3 font-serif text-[26px] tracking-tight">Search everything</h1>
       <div className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.03)] focus-within:border-accent">
         <Search size={18} className="text-muted" />

@@ -25,7 +25,7 @@ export function TodayPanel() {
   const cfg = ICPS[icp];
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-6 pb-16 pt-10">
+    <div className="mx-auto w-full max-w-[820px] px-6 pb-16 pt-10">
       <div className="mb-3 flex items-center gap-2">
         <h2 className="font-serif text-[20px] tracking-tight">Today</h2>
         <span className="text-[13px] text-muted">· your persona did the prep</span>

@@ -94,7 +94,7 @@ export function CommandArea() {
   const started = thread.length > 0;
 
   return (
-    <div className="mx-auto w-full max-w-[760px] px-6">
+    <div className="mx-auto w-full max-w-[820px] px-6">
       {/* Greeting */}
       {!started && (
         <div className="pt-10 pb-6 animate-fade-in">

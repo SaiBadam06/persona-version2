@@ -47,7 +47,7 @@ export function MarketplaceView() {
   }, [query, category]);
 
   return (
-    <div className="mx-auto w-full max-w-[860px] px-6 py-9 animate-fade-in">
+    <div className="mx-auto w-full max-w-[820px] px-6 py-9 animate-fade-in">
       <header className="mb-6 flex items-start gap-3">
         <Store className="mt-1 text-accent" size={26} />
         <div>
