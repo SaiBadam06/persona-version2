@@ -52,14 +52,14 @@ export function Sidebar() {
         onClick={() => setView(item.id)}
         title={sidebarCollapsed ? item.label : undefined}
         className={cn(
-          "flex w-full items-center rounded-lg text-[14px] transition",
-          sidebarCollapsed ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2",
+          "flex w-full items-center rounded-lg text-[13px] transition",
+          sidebarCollapsed ? "justify-center px-0 py-2" : "gap-2.5 px-3 py-1.5",
           active
             ? "bg-surface font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.04)] ring-1 ring-line"
             : "text-ink-soft hover:bg-paper-2"
         )}
       >
-        <Icon size={17} className={active ? "text-accent" : "text-muted"} />
+        <Icon size={16} className={active ? "text-accent" : "text-muted"} />
         {!sidebarCollapsed && item.label}
       </button>
     );
