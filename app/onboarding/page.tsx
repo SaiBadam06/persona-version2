@@ -96,7 +96,7 @@ export default function OnboardingPage() {
         <img
           src={isDark ? "/personaon_white.png" : "/personaon_black.png"}
           alt="PersonaOn"
-          className="h-8 w-auto object-contain"
+          className="h-9 w-auto max-w-[172px] object-contain"
         />
         <div className="ml-auto flex items-center gap-1.5">
           {STEPS.map((s, i) => (
